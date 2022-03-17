@@ -8,6 +8,7 @@ defmodule TopshelfWeb.Router do
     plug :put_root_layout, {TopshelfWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :auth
   end
 
   pipeline :api do
@@ -53,6 +54,16 @@ defmodule TopshelfWeb.Router do
       pipe_through :browser
 
       live_dashboard "/dashboard", metrics: TopshelfWeb.Telemetry
+    end
+  end
+
+  defp auth(conn, _opts) do
+    if !(Application.get_env(:topshelf, :environment) in [:dev, :test]) do
+      username = System.fetch_env!("AUTH_USERNAME")
+      password = System.fetch_env!("AUTH_PASSWORD")
+      Plug.BasicAuth.basic_auth(conn, username: username, password: password)
+    else
+      conn
     end
   end
 end

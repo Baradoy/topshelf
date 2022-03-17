@@ -7,6 +7,8 @@
 # General application configuration
 import Config
 
+config :topshelf, :environment, Mix.env()
+
 config :topshelf,
   ecto_repos: [Topshelf.Repo]
 
