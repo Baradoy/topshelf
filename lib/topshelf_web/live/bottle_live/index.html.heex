@@ -1,0 +1,51 @@
+<h1>Listing Bottles</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.bottle_index_path(@socket, :index)}>
+    <.live_component
+      module={TopshelfWeb.BottleLive.FormComponent}
+      id={@bottle.id || :new}
+      title={@page_title}
+      action={@live_action}
+      bottle={@bottle}
+      return_to={Routes.bottle_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Brand</th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Volume</th>
+      <th>Abv</th>
+      <th>Url</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="bottles">
+    <%= for bottle <- @bottles do %>
+      <tr id={"bottle-#{bottle.id}"}>
+        <td><%= bottle.brand %></td>
+        <td><%= bottle.name %></td>
+        <td><%= bottle.type %></td>
+        <td><%= bottle.description %></td>
+        <td><%= bottle.volume %></td>
+        <td><%= bottle.abv %></td>
+        <td><%= bottle.url %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.bottle_show_path(@socket, :show, bottle) %></span>
+          <span><%= live_patch "Edit", to: Routes.bottle_index_path(@socket, :edit, bottle) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: bottle.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Bottle", to: Routes.bottle_index_path(@socket, :new) %></span>

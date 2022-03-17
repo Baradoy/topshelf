@@ -1,0 +1,56 @@
+<h1>Show Bottle</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.bottle_show_path(@socket, :show, @bottle)}>
+    <.live_component
+      module={TopshelfWeb.BottleLive.FormComponent}
+      id={@bottle.id}
+      title={@page_title}
+      action={@live_action}
+      bottle={@bottle}
+      return_to={Routes.bottle_show_path(@socket, :show, @bottle)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Brand:</strong>
+    <%= @bottle.brand %>
+  </li>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @bottle.name %>
+  </li>
+
+  <li>
+    <strong>Type:</strong>
+    <%= @bottle.type %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @bottle.description %>
+  </li>
+
+  <li>
+    <strong>Volume:</strong>
+    <%= @bottle.volume %>
+  </li>
+
+  <li>
+    <strong>Abv:</strong>
+    <%= @bottle.abv %>
+  </li>
+
+  <li>
+    <strong>Url:</strong>
+    <%= @bottle.url %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.bottle_show_path(@socket, :edit, @bottle), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.bottle_index_path(@socket, :index) %></span>
