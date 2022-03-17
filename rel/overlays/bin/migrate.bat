@@ -1,0 +1,1 @@
+call "%~dp0\topshelf" eval Topshelf.Release.migrate
