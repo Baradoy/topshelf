@@ -13,7 +13,8 @@ defmodule TopshelfWeb.BottleLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:bottle, Inventory.get_bottle!(id))}
+     |> assign(:bottle, Inventory.get_bottle!(id))
+     |> assign(:shelves, Inventory.list_shelves())}
   end
 
   defp page_title(:show), do: "Show Bottle"

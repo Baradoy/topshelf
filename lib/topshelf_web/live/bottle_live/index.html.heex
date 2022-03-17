@@ -8,6 +8,7 @@
       title={@page_title}
       action={@live_action}
       bottle={@bottle}
+      shelves={@shelves}
       return_to={Routes.bottle_index_path(@socket, :index)}
     />
   </.modal>
@@ -19,10 +20,9 @@
       <th>Brand</th>
       <th>Name</th>
       <th>Type</th>
-      <th>Description</th>
       <th>Volume</th>
       <th>Abv</th>
-      <th>Url</th>
+      <th>Shelf</th>
 
       <th></th>
     </tr>
@@ -33,10 +33,9 @@
         <td><%= bottle.brand %></td>
         <td><%= bottle.name %></td>
         <td><%= bottle.type %></td>
-        <td><%= bottle.description %></td>
         <td><%= bottle.volume %></td>
         <td><%= bottle.abv %></td>
-        <td><%= bottle.url %></td>
+        <td><%= bottle.shelf.name %></td>
 
         <td>
           <span><%= live_redirect "Show", to: Routes.bottle_show_path(@socket, :show, bottle) %></span>

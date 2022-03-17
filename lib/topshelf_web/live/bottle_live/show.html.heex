@@ -8,6 +8,7 @@
       title={@page_title}
       action={@live_action}
       bottle={@bottle}
+      shelves={@shelves}
       return_to={Routes.bottle_show_path(@socket, :show, @bottle)}
     />
   </.modal>
@@ -43,6 +44,11 @@
   <li>
     <strong>Abv:</strong>
     <%= @bottle.abv %>
+  </li>
+
+  <li>
+    <strong>Shelf:</strong>
+    <%= @bottle.shelf.name %>
   </li>
 
   <li>

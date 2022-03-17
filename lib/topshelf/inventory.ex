@@ -114,7 +114,9 @@ defmodule Topshelf.Inventory do
 
   """
   def list_bottles do
-    Repo.all(Bottle)
+    Bottle
+    |> preload(:shelf)
+    |> Repo.all()
   end
 
   @doc """
@@ -131,7 +133,11 @@ defmodule Topshelf.Inventory do
       ** (Ecto.NoResultsError)
 
   """
-  def get_bottle!(id), do: Repo.get!(Bottle, id)
+  def get_bottle!(id) do
+    Bottle
+    |> preload(:shelf)
+    |> Repo.get!(id)
+  end
 
   @doc """
   Creates a bottle.

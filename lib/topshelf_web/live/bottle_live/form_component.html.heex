@@ -33,6 +33,10 @@
     <%= number_input f, :abv, step: "any" %>
     <%= error_tag f, :abv %>
   
+    <%= label f, :shelf_id %>
+    <%= select f, :shelf_id, Enum.map(@shelves, &{&1.name, &1.id}) %>
+    <%= error_tag f, :url %>
+
     <%= label f, :url %>
     <%= text_input f, :url %>
     <%= error_tag f, :url %>

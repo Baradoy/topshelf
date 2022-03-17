@@ -18,12 +18,14 @@ defmodule TopshelfWeb.BottleLive.Index do
     socket
     |> assign(:page_title, "Edit Bottle")
     |> assign(:bottle, Inventory.get_bottle!(id))
+    |> assign(:shelves, Inventory.list_shelves())
   end
 
   defp apply_action(socket, :new, _params) do
     socket
     |> assign(:page_title, "New Bottle")
     |> assign(:bottle, %Bottle{})
+    |> assign(:shelves, Inventory.list_shelves())
   end
 
   defp apply_action(socket, :index, _params) do
