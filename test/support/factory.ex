@@ -4,7 +4,7 @@ defmodule Topshelf.Factory do
   def shelf_factory do
     %Topshelf.Inventory.Shelf{
       name: "some name",
-      description: "some description",
+      description: "some description"
     }
   end
 
@@ -20,5 +20,4 @@ defmodule Topshelf.Factory do
       shelf: build(:shelf)
     }
   end
-
 end

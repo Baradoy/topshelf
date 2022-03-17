@@ -64,7 +64,16 @@ defmodule Topshelf.InventoryTest do
 
     import Topshelf.Factory
 
-    @invalid_attrs %{abv: nil, brand: nil, description: nil, name: nil, type: nil, url: nil, volume: nil, shelf_id: nil}
+    @invalid_attrs %{
+      abv: nil,
+      brand: nil,
+      description: nil,
+      name: nil,
+      type: nil,
+      url: nil,
+      volume: nil,
+      shelf_id: nil
+    }
 
     test "list_bottles/0 returns all bottles" do
       bottle = insert(:bottle)
@@ -78,7 +87,17 @@ defmodule Topshelf.InventoryTest do
 
     test "create_bottle/1 with valid data creates a bottle" do
       shelf = insert(:shelf)
-      valid_attrs = %{abv: 120.5, brand: "some brand", description: "some description", name: "some name", type: "some type", url: "some url", volume: "some volume", shelf_id: shelf.id}
+
+      valid_attrs = %{
+        abv: 120.5,
+        brand: "some brand",
+        description: "some description",
+        name: "some name",
+        type: "some type",
+        url: "some url",
+        volume: "some volume",
+        shelf_id: shelf.id
+      }
 
       assert {:ok, %Bottle{} = bottle} = Inventory.create_bottle(valid_attrs)
       assert bottle.abv == 120.5
@@ -96,7 +115,16 @@ defmodule Topshelf.InventoryTest do
 
     test "update_bottle/2 with valid data updates the bottle" do
       bottle = insert(:bottle)
-      update_attrs = %{abv: 456.7, brand: "some updated brand", description: "some updated description", name: "some updated name", type: "some updated type", url: "some updated url", volume: "some updated volume"}
+
+      update_attrs = %{
+        abv: 456.7,
+        brand: "some updated brand",
+        description: "some updated description",
+        name: "some updated name",
+        type: "some updated type",
+        url: "some updated url",
+        volume: "some updated volume"
+      }
 
       assert {:ok, %Bottle{} = bottle} = Inventory.update_bottle(bottle, update_attrs)
       assert bottle.abv == 456.7

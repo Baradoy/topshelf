@@ -4,8 +4,24 @@ defmodule TopshelfWeb.BottleLiveTest do
   import Phoenix.LiveViewTest
   import Topshelf.Factory
 
-  @update_attrs %{abv: 456.7, brand: "some updated brand", description: "some updated description", name: "some updated name", type: "some updated type", url: "some updated url", volume: "some updated volume"}
-  @invalid_attrs %{abv: nil, brand: nil, description: nil, name: nil, type: nil, url: nil, volume: nil}
+  @update_attrs %{
+    abv: 456.7,
+    brand: "some updated brand",
+    description: "some updated description",
+    name: "some updated name",
+    type: "some updated type",
+    url: "some updated url",
+    volume: "some updated volume"
+  }
+  @invalid_attrs %{
+    abv: nil,
+    brand: nil,
+    description: nil,
+    name: nil,
+    type: nil,
+    url: nil,
+    volume: nil
+  }
 
   defp create_bottle(_) do
     bottle = insert(:bottle)
