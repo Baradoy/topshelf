@@ -2,14 +2,14 @@ defmodule TopshelfWeb.ShelfLiveTest do
   use TopshelfWeb.ConnCase
 
   import Phoenix.LiveViewTest
-  import Topshelf.InventoryFixtures
+  import Topshelf.Factory
 
   @create_attrs %{description: "some description", name: "some name"}
   @update_attrs %{description: "some updated description", name: "some updated name"}
   @invalid_attrs %{description: nil, name: nil}
 
   defp create_shelf(_) do
-    shelf = shelf_fixture()
+    shelf = insert(:shelf)
     %{shelf: shelf}
   end
 

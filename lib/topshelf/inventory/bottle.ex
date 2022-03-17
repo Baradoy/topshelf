@@ -21,6 +21,6 @@ defmodule Topshelf.Inventory.Bottle do
   def changeset(bottle, attrs) do
     bottle
     |> cast(attrs, [:brand, :name, :type, :description, :volume, :abv, :url, :shelf_id])
-    |> validate_required([:shelf_id])
+    |> validate_required([:name, :shelf_id])
   end
 end

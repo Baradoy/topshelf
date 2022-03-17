@@ -2,14 +2,13 @@ defmodule TopshelfWeb.BottleLiveTest do
   use TopshelfWeb.ConnCase
 
   import Phoenix.LiveViewTest
-  import Topshelf.InventoryFixtures
+  import Topshelf.Factory
 
-  @create_attrs %{abv: 120.5, brand: "some brand", description: "some description", name: "some name", type: "some type", url: "some url", volume: "some volume"}
   @update_attrs %{abv: 456.7, brand: "some updated brand", description: "some updated description", name: "some updated name", type: "some updated type", url: "some updated url", volume: "some updated volume"}
   @invalid_attrs %{abv: nil, brand: nil, description: nil, name: nil, type: nil, url: nil, volume: nil}
 
   defp create_bottle(_) do
-    bottle = bottle_fixture()
+    bottle = insert(:bottle)
     %{bottle: bottle}
   end
 
@@ -37,7 +36,7 @@ defmodule TopshelfWeb.BottleLiveTest do
 
       {:ok, _, html} =
         index_live
-        |> form("#bottle-form", bottle: @create_attrs)
+        |> form("#bottle-form", bottle: params_for(:bottle))
         |> render_submit()
         |> follow_redirect(conn, Routes.bottle_index_path(conn, :index))
 
