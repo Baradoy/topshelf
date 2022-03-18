@@ -36,3 +36,5 @@ npm-debug.log
 *.db
 *.db-*
 
+# Private direnv file
+.envrc.private
