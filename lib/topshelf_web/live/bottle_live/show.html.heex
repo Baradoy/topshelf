@@ -1,11 +1,10 @@
 <h1>Show Bottle</h1>
 
 <%= if @live_action in [:edit] do %>
-  <.modal return_to={Routes.bottle_show_path(@socket, :show, @bottle)}>
+  <.modal max_width="xl" title={@page_title} >
     <.live_component
       module={TopshelfWeb.BottleLive.FormComponent}
       id={@bottle.id}
-      title={@page_title}
       action={@live_action}
       bottle={@bottle}
       shelves={@shelves}
@@ -14,49 +13,37 @@
   </.modal>
 <% end %>
 
-<ul>
+<.container max_width="xl">
+  <.card class="max-w-sm">
+    <.card_media src={ @bottle.url } />
+    <.card_content category={ @bottle.shelf.name } heading={ @bottle.type }>
+      <.dl>
+        <.dt>Name</.dt>
+        <.dd><%= @bottle.name %></.dd>
 
-  <li>
-    <strong>Brand:</strong>
-    <%= @bottle.brand %>
-  </li>
+        <.dt>Brand</.dt>
+        <.dd><%= @bottle.brand %></.dd>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @bottle.name %>
-  </li>
+        <.dt>Type</.dt>
+        <.dd><%= @bottle.type %></.dd>
 
-  <li>
-    <strong>Type:</strong>
-    <%= @bottle.type %>
-  </li>
+        <.dt>Description</.dt>
+        <.dd><%= @bottle.description %></.dd>
 
-  <li>
-    <strong>Description:</strong>
-    <%= @bottle.description %>
-  </li>
+        <.dt>Volume</.dt>
+        <.dd><%= @bottle.volume %></.dd>
 
-  <li>
-    <strong>Volume:</strong>
-    <%= @bottle.volume %>
-  </li>
-
-  <li>
-    <strong>Abv:</strong>
-    <%= @bottle.abv %>
-  </li>
-
-  <li>
-    <strong>Shelf:</strong>
-    <%= @bottle.shelf.name %>
-  </li>
-
-  <li>
-    <strong>Url:</strong>
-    <%= @bottle.url %>
-  </li>
-
-</ul>
-
-<span><%= live_patch "Edit", to: Routes.bottle_show_path(@socket, :edit, @bottle), class: "button" %></span> |
-<span><%= live_redirect "Back", to: Routes.bottle_index_path(@socket, :index) %></span>
+        <.dt>ABV</.dt>
+        <.dd><%= @bottle.abv %></.dd>
+      </.dl>
+    </.card_content>
+    <.card_footer>
+      <.button link_type="live_patch" to={ Routes.bottle_show_path(@socket, :edit, @bottle) } label="Edit" >
+         <Heroicons.Solid.pencil class="w-4 h-4 mr-2" />Edit
+      </.button>
+      <.button link_type="live_redirect" to={ Routes.bottle_index_path(@socket, :index) } label="Back" >
+        <Heroicons.Solid.arrow_left class="w-4 h-4 mr-2" />Back
+      </.button>
+    </.card_footer>
+  </.card>
+</.container>

@@ -1,6 +1,9 @@
 defmodule TopshelfWeb.BottleLive.Show do
   use TopshelfWeb, :live_view
 
+  use PetalComponents
+  import TopshelfWeb.LiveComponents
+
   alias Topshelf.Inventory
 
   @impl true
@@ -19,4 +22,9 @@ defmodule TopshelfWeb.BottleLive.Show do
 
   defp page_title(:show), do: "Show Bottle"
   defp page_title(:edit), do: "Edit Bottle"
+
+  @impl true
+  def handle_event("close_modal", _, socket) do
+    {:noreply, push_patch(socket, to: Routes.bottle_index_path(socket, :index))}
+  end
 end

@@ -1,6 +1,8 @@
 defmodule TopshelfWeb.BottleLive.Index do
   use TopshelfWeb, :live_view
 
+  use PetalComponents
+
   alias Topshelf.Inventory
   alias Topshelf.Inventory.Bottle
 
@@ -30,7 +32,7 @@ defmodule TopshelfWeb.BottleLive.Index do
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Bottles")
+    |> assign(:page_title, "Bottles")
     |> assign(:bottle, nil)
   end
 
@@ -40,6 +42,10 @@ defmodule TopshelfWeb.BottleLive.Index do
     {:ok, _} = Inventory.delete_bottle(bottle)
 
     {:noreply, assign(socket, :bottles, list_bottles())}
+  end
+
+  def handle_event("close_modal", _, socket) do
+    {:noreply, push_patch(socket, to: Routes.bottle_index_path(socket, :index))}
   end
 
   defp list_bottles do

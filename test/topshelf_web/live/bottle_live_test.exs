@@ -34,7 +34,7 @@ defmodule TopshelfWeb.BottleLiveTest do
     test "lists all bottles", %{conn: conn, bottle: bottle} do
       {:ok, _index_live, html} = live(conn, Routes.bottle_index_path(conn, :index))
 
-      assert html =~ "Listing Bottles"
+      assert html =~ "Bottles"
       assert html =~ bottle.brand
     end
 
