@@ -105,7 +105,7 @@ defmodule Topshelf.Inventory do
   alias Topshelf.Inventory.Bottle
 
   @doc """
-  Returns the list of bottles.
+  Returns the list of bottles matching the search query
 
   ## Examples
 
@@ -113,8 +113,16 @@ defmodule Topshelf.Inventory do
       [%Bottle{}, ...]
 
   """
-  def list_bottles do
-    Bottle
+  def list_bottles(opts \\ []) do
+    opts
+    |> Enum.reduce(Bottle, fn
+      {:search, search}, query ->
+        s = "%#{search}%"
+        query |> where([b], like(b.brand, ^s) or like(b.name, ^s) or like(b.type, ^s))
+
+      {:search, ""}, query ->
+        query
+    end)
     |> preload(:shelf)
     |> Repo.all()
   end

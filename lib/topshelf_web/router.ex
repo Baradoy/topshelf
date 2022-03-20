@@ -19,7 +19,7 @@ defmodule TopshelfWeb.Router do
     pipe_through :browser
 
     live_session :default do
-      live "/", BottleLive.Index, :index
+      live "/", LandingLive.Index, :index
 
       live "/shelves", ShelfLive.Index, :index
       live "/shelves/new", ShelfLive.Index, :new
