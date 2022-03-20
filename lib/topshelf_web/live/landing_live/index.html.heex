@@ -1,18 +1,15 @@
-<%= if @live_action in [:new, :edit] do %>
-  <.modal max_width="xl" title={@page_title}>
-    <.live_component
-      module={TopshelfWeb.BottleLive.FormComponent}
-      id={@bottle.id || :new}
-      title={@page_title}
-      action={@live_action}
-      bottle={@bottle}
-      shelves={@shelves}
-      return_to={Routes.bottle_index_path(@socket, :index)}
-    />
-  </.modal>
-<% end %>
+<.tabbed_container landing>
+  <.form
+    let={f}
+    for={@changeset}
+    id="search-form"
+    phx-submit="search"
+  >
+    <.form_label form={f} field={:search} />
+    <.search_input form={f} field={:search} />
+    <.form_field_error form={f} field={:search} class="mt-1" />
+  </.form>
 
-<.tabbed_container bottles>
   <.table>
     <.tr>
       <.th>Bottle</.th>
@@ -47,10 +44,4 @@
       </.tr>
     <% end %>
   </.table>
-
-
-  <span>
-    <.button link_type="live_patch" to={Routes.bottle_index_path(@socket, :new)} label="New Bottle" />
-  </span>
-
 </.tabbed_container>

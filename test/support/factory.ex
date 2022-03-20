@@ -15,7 +15,7 @@ defmodule Topshelf.Factory do
       description: "some description",
       name: "some name",
       type: "some type",
-      url: "https://example.com/image",
+      image_url: "https://example.com/image",
       volume: "some volume",
       shelf: build(:shelf)
     }

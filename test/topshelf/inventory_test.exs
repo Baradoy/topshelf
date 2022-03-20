@@ -70,7 +70,7 @@ defmodule Topshelf.InventoryTest do
       description: nil,
       name: nil,
       type: nil,
-      url: nil,
+      image_url: nil,
       volume: nil,
       shelf_id: nil
     }
@@ -94,7 +94,7 @@ defmodule Topshelf.InventoryTest do
         description: "some description",
         name: "some name",
         type: "some type",
-        url: "some url",
+        image_url: "some url",
         volume: "some volume",
         shelf_id: shelf.id
       }
@@ -105,7 +105,7 @@ defmodule Topshelf.InventoryTest do
       assert bottle.description == "some description"
       assert bottle.name == "some name"
       assert bottle.type == "some type"
-      assert bottle.url == "some url"
+      assert bottle.image_url == "some url"
       assert bottle.volume == "some volume"
     end
 
@@ -122,7 +122,7 @@ defmodule Topshelf.InventoryTest do
         description: "some updated description",
         name: "some updated name",
         type: "some updated type",
-        url: "some updated url",
+        image_url: "some updated url",
         volume: "some updated volume"
       }
 
@@ -132,7 +132,7 @@ defmodule Topshelf.InventoryTest do
       assert bottle.description == "some updated description"
       assert bottle.name == "some updated name"
       assert bottle.type == "some updated type"
-      assert bottle.url == "some updated url"
+      assert bottle.image_url == "some updated url"
       assert bottle.volume == "some updated volume"
     end
 
