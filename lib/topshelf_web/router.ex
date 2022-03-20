@@ -18,21 +18,23 @@ defmodule TopshelfWeb.Router do
   scope "/", TopshelfWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    live_session :default do
+      live "/", BottleLive.Index, :index
 
-    live "/shelves", ShelfLive.Index, :index
-    live "/shelves/new", ShelfLive.Index, :new
-    live "/shelves/:id/edit", ShelfLive.Index, :edit
+      live "/shelves", ShelfLive.Index, :index
+      live "/shelves/new", ShelfLive.Index, :new
+      live "/shelves/:id/edit", ShelfLive.Index, :edit
 
-    live "/shelves/:id", ShelfLive.Show, :show
-    live "/shelves/:id/show/edit", ShelfLive.Show, :edit
+      live "/shelves/:id", ShelfLive.Show, :show
+      live "/shelves/:id/show/edit", ShelfLive.Show, :edit
 
-    live "/bottles", BottleLive.Index, :index
-    live "/bottles/new", BottleLive.Index, :new
-    live "/bottles/:id/edit", BottleLive.Index, :edit
+      live "/bottles", BottleLive.Index, :index
+      live "/bottles/new", BottleLive.Index, :new
+      live "/bottles/:id/edit", BottleLive.Index, :edit
 
-    live "/bottles/:id", BottleLive.Show, :show
-    live "/bottles/:id/show/edit", BottleLive.Show, :edit
+      live "/bottles/:id", BottleLive.Show, :show
+      live "/bottles/:id/show/edit", BottleLive.Show, :edit
+    end
   end
 
   # Other scopes may use custom stacks.
