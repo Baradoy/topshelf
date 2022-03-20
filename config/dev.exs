@@ -22,7 +22,8 @@ config :topshelf, TopshelfWeb.Endpoint,
   secret_key_base: "OcTtvh61CLmhOYIxEW/WXm1Uo5utqzOwlhXCkXiqVldahE2hNKJmfz/gg7+FWbvu",
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
 
 # ## SSL Support
