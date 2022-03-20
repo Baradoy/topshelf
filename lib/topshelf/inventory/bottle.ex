@@ -6,11 +6,12 @@ defmodule Topshelf.Inventory.Bottle do
 
   schema "bottles" do
     field :abv, :float
+    field :remaining_percent, :integer
     field :brand, :string
     field :description, :string
     field :name, :string
     field :type, :string
-    field :url, :string
+    field :image_url, :string
     field :volume, :string
     belongs_to :shelf, Shelf
 
@@ -20,7 +21,7 @@ defmodule Topshelf.Inventory.Bottle do
   @doc false
   def changeset(bottle, attrs) do
     bottle
-    |> cast(attrs, [:brand, :name, :type, :description, :volume, :abv, :url, :shelf_id])
+    |> cast(attrs, [:brand, :name, :type, :description, :volume, :abv, :image_url, :shelf_id, :remaining_percent])
     |> validate_required([:name, :shelf_id])
   end
 end

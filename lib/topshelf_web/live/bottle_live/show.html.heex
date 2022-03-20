@@ -13,9 +13,9 @@
   </.modal>
 <% end %>
 
-<.tabbed_container>
+<.tabbed_container bottles>
   <.card class="max-w-sm">
-    <.card_media src={ @bottle.url } />
+    <.card_media src={ @bottle.image_url } />
     <.card_content category={ @bottle.shelf.name } heading={ @bottle.type }>
       <.dl>
         <.dt>Name</.dt>
@@ -29,6 +29,9 @@
 
         <.dt>Description</.dt>
         <.dd><%= @bottle.description %></.dd>
+
+        <.dt>Remaining</.dt>
+        <.dd><%= @bottle.remaining_percent %>%</.dd>
 
         <.dt>Volume</.dt>
         <.dd><%= @bottle.volume %></.dd>

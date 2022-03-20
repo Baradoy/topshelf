@@ -27,13 +27,13 @@
       <.tr id={"bottle-#{bottle.id}"}>
         <.td>
           <.user_inner_td
-            avatar_assigns={%{src: bottle.url}}
+            avatar_assigns={%{src: bottle.image_url}}
             sub_label={ bottle.brand }
             label={ bottle.name }
           />
         </.td>
         <.td><%= bottle.type %></.td>
-        <.td><%= bottle.volume %></.td>
+        <.td><%= bottle.remaining_percent %> of <%= bottle.volume %></.td>
         <.td><%= bottle.abv %></.td>
         <.td>
           <span><%= live_redirect bottle.shelf.name, to: Routes.shelf_show_path(@socket, :show, bottle.shelf) %></span>

@@ -10,7 +10,7 @@ defmodule TopshelfWeb.BottleLiveTest do
     description: "some updated description",
     name: "some updated name",
     type: "some updated type",
-    url: "some updated url",
+    image_url: "some updated url",
     volume: "some updated volume"
   }
   @invalid_attrs %{
@@ -19,7 +19,7 @@ defmodule TopshelfWeb.BottleLiveTest do
     description: nil,
     name: nil,
     type: nil,
-    url: nil,
+    image_url: nil,
     volume: nil
   }
 
