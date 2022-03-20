@@ -12,7 +12,7 @@
   </.modal>
 <% end %>
 
-<.container max_width="xl">
+<.tabbed_container bottles>
   <.table>
     <.tr>
       <.th>Bottle</.th>
@@ -53,4 +53,4 @@
     <.button link_type="live_patch" to={Routes.bottle_index_path(@socket, :new)} label="New Bottle" />
   </span>
 
-</.container>
+</.tabbed_container>

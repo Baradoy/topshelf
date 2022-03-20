@@ -2,6 +2,7 @@ defmodule TopshelfWeb.BottleLive.Index do
   use TopshelfWeb, :live_view
 
   use PetalComponents
+  import TopshelfWeb.LiveComponents
 
   alias Topshelf.Inventory
   alias Topshelf.Inventory.Bottle

@@ -1,5 +1,7 @@
 defmodule TopshelfWeb.LiveComponents do
-  use Phoenix.Component
+  use TopshelfWeb, :live_component
+
+  use PetalComponents
 
   defp assign_class_and_extra_attribures(assigns, default_class) do
     assigns
@@ -42,6 +44,34 @@ defmodule TopshelfWeb.LiveComponents do
     <dd class={ @class } {@extra_assigns}>
       <%= render_slot(@inner_block) %>
     </dd>
+    """
+  end
+
+  def tabbed_container(assigns) do
+    assigns =
+      assigns
+      |> assign_new(:home, fn -> false end)
+      |> assign_new(:bottles, fn -> false end)
+      |> assign_new(:shelves, fn -> false end)
+
+    ~H"""
+    <.container max_width="xl">
+      <.tabs underline>
+        <.tab underline is_active={@home} link_type="live_redirect" to="/">
+          <Heroicons.Outline.device_mobile class="w-5 h-5 mr-2" />
+            Home
+        </.tab>
+        <.tab underline is_active={@bottles} link_type="live_redirect" to={ Routes.bottle_index_path(TopshelfWeb.Endpoint, :index) }>
+          <Heroicons.Outline.beaker class="w-5 h-5 mr-2" />
+            Bottles
+        </.tab>
+        <.tab underline is_active={@shelves} link_type="live_redirect" to={ Routes.shelf_index_path(TopshelfWeb.Endpoint, :index) }> 
+          <Heroicons.Outline.library class="w-5 h-5 mr-2" />
+            Shelves
+        </.tab>
+      </.tabs>
+      <%= render_slot(@inner_block) %>
+    </.container>
     """
   end
 end

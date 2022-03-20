@@ -11,7 +11,7 @@
   </.modal>
 <% end %>
 
-<.container max_width="xl">
+<.tabbed_container shelves>
   <.dl>
     <.dt>Name:</.dt>
     <.dd><%= @shelf.name %></.dd>
@@ -26,4 +26,4 @@
   <.button link_type="live_redirect" to={ Routes.shelf_index_path(@socket, :index) } label="Back" >
     <Heroicons.Solid.arrow_left class="w-4 h-4 mr-2" />Back
   </.button>
-</.container>
+</.tabbed_container>

@@ -13,7 +13,7 @@
   </.modal>
 <% end %>
 
-<.container max_width="xl">
+<.tabbed_container>
   <.card class="max-w-sm">
     <.card_media src={ @bottle.url } />
     <.card_content category={ @bottle.shelf.name } heading={ @bottle.type }>
@@ -39,11 +39,11 @@
     </.card_content>
     <.card_footer>
       <.button link_type="live_patch" to={ Routes.bottle_show_path(@socket, :edit, @bottle) } label="Edit" >
-         <Heroicons.Solid.pencil class="w-4 h-4 mr-2" />Edit
+        <Heroicons.Solid.pencil class="w-4 h-4 mr-2" />Edit
       </.button>
       <.button link_type="live_redirect" to={ Routes.bottle_index_path(@socket, :index) } label="Back" >
         <Heroicons.Solid.arrow_left class="w-4 h-4 mr-2" />Back
       </.button>
     </.card_footer>
   </.card>
-</.container>
+</.tabbed_container>

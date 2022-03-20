@@ -11,27 +11,29 @@
   </.modal>
 <% end %>
 
-<.table>
-  <.tr>
-    <.th>Name</.th>
-    <.th>Description</.th>
+<.tabbed_container shelves>
+  <.table>
+    <.tr>
+      <.th>Name</.th>
+      <.th>Description</.th>
 
-    <.th></.th>
-  </.tr>
-  <%= for shelf <- @shelves do %>
-    <.tr id={"shelf-#{shelf.id}"}>
-      <.td><%= shelf.name %></.td>
-      <.td><%= shelf.description %></.td>
-
-      <.td>
-        <span><%= live_redirect "Show", to: Routes.shelf_show_path(@socket, :show, shelf) %></span>
-        <span><%= live_patch "Edit", to: Routes.shelf_index_path(@socket, :edit, shelf) %></span>
-        <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: shelf.id, data: [confirm: "Are you sure?"] %></span>
-      </.td>
+      <.th></.th>
     </.tr>
-  <% end %>
-</.table>
+    <%= for shelf <- @shelves do %>
+      <.tr id={"shelf-#{shelf.id}"}>
+        <.td><%= shelf.name %></.td>
+        <.td><%= shelf.description %></.td>
 
- <span>
+        <.td>
+          <span><%= live_redirect "Show", to: Routes.shelf_show_path(@socket, :show, shelf) %></span>
+          <span><%= live_patch "Edit", to: Routes.shelf_index_path(@socket, :edit, shelf) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: shelf.id, data: [confirm: "Are you sure?"] %></span>
+        </.td>
+      </.tr>
+    <% end %>
+  </.table>
+
+  <span>
     <.button link_type="live_patch" to={Routes.shelf_index_path(@socket, :new)} label="New Shelf" />
   </span>
+</.tabbed_container>
