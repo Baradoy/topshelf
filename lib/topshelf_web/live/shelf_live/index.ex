@@ -1,6 +1,9 @@
 defmodule TopshelfWeb.ShelfLive.Index do
   use TopshelfWeb, :live_view
 
+  use PetalComponents
+  import TopshelfWeb.LiveComponents
+
   alias Topshelf.Inventory
   alias Topshelf.Inventory.Shelf
 
@@ -38,6 +41,10 @@ defmodule TopshelfWeb.ShelfLive.Index do
     {:ok, _} = Inventory.delete_shelf(shelf)
 
     {:noreply, assign(socket, :shelves, list_shelves())}
+  end
+
+  def handle_event("close_modal", _, socket) do
+    {:noreply, push_patch(socket, to: Routes.shelf_index_path(socket, :index))}
   end
 
   defp list_shelves do

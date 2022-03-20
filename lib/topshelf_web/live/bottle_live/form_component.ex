@@ -1,6 +1,8 @@
 defmodule TopshelfWeb.BottleLive.FormComponent do
   use TopshelfWeb, :live_component
 
+  use PetalComponents
+
   alias Topshelf.Inventory
 
   @impl true

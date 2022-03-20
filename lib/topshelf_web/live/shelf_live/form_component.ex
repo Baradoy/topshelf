@@ -1,6 +1,8 @@
 defmodule TopshelfWeb.ShelfLive.FormComponent do
   use TopshelfWeb, :live_component
 
+  use PetalComponents
+
   alias Topshelf.Inventory
 
   @impl true

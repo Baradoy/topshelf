@@ -1,7 +1,5 @@
-<h1>Show Shelf</h1>
-
 <%= if @live_action in [:edit] do %>
-  <.modal return_to={Routes.shelf_show_path(@socket, :show, @shelf)}>
+  <.modal max_width="xl" title={@page_title}>
     <.live_component
       module={TopshelfWeb.ShelfLive.FormComponent}
       id={@shelf.id}
@@ -13,19 +11,19 @@
   </.modal>
 <% end %>
 
-<ul>
+<.tabbed_container shelves>
+  <.dl>
+    <.dt>Name:</.dt>
+    <.dd><%= @shelf.name %></.dd>
+  
+    <.dt>Description:</.dt>
+    <.dd><%= @shelf.description %></.dd>
+  </.dl>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @shelf.name %>
-  </li>
-
-  <li>
-    <strong>Description:</strong>
-    <%= @shelf.description %>
-  </li>
-
-</ul>
-
-<span><%= live_patch "Edit", to: Routes.shelf_show_path(@socket, :edit, @shelf), class: "button" %></span> |
-<span><%= live_redirect "Back", to: Routes.shelf_index_path(@socket, :index) %></span>
+  <.button link_type="live_patch" to={ Routes.shelf_show_path(@socket, :edit, @shelf) } label="Edit" >
+    <Heroicons.Solid.pencil class="w-4 h-4 mr-2" />Edit
+  </.button>
+  <.button link_type="live_redirect" to={ Routes.shelf_index_path(@socket, :index) } label="Back" >
+    <Heroicons.Solid.arrow_left class="w-4 h-4 mr-2" />Back
+  </.button>
+</.tabbed_container>

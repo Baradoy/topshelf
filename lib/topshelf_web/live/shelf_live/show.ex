@@ -1,6 +1,9 @@
 defmodule TopshelfWeb.ShelfLive.Show do
   use TopshelfWeb, :live_view
 
+  use PetalComponents
+  import TopshelfWeb.LiveComponents
+
   alias Topshelf.Inventory
 
   @impl true

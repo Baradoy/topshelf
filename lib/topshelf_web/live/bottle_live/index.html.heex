@@ -1,7 +1,5 @@
-<h1>Listing Bottles</h1>
-
 <%= if @live_action in [:new, :edit] do %>
-  <.modal return_to={Routes.bottle_index_path(@socket, :index)}>
+  <.modal max_width="xl" title={@page_title}>
     <.live_component
       module={TopshelfWeb.BottleLive.FormComponent}
       id={@bottle.id || :new}
@@ -14,37 +12,45 @@
   </.modal>
 <% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Brand</th>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Volume</th>
-      <th>Abv</th>
-      <th>Shelf</th>
+<.tabbed_container bottles>
+  <.table>
+    <.tr>
+      <.th>Bottle</.th>
+      <.th>Type</.th>
+      <.th>Volume</.th>
+      <.th>Abv</.th>
+      <.th>Shelf</.th>
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody id="bottles">
+      <.th></.th>
+    </.tr>
     <%= for bottle <- @bottles do %>
-      <tr id={"bottle-#{bottle.id}"}>
-        <td><%= bottle.brand %></td>
-        <td><%= bottle.name %></td>
-        <td><%= bottle.type %></td>
-        <td><%= bottle.volume %></td>
-        <td><%= bottle.abv %></td>
-        <td><%= bottle.shelf.name %></td>
+      <.tr id={"bottle-#{bottle.id}"}>
+        <.td>
+          <.user_inner_td
+            avatar_assigns={%{src: bottle.url}}
+            sub_label={ bottle.brand }
+            label={ bottle.name }
+          />
+        </.td>
+        <.td><%= bottle.type %></.td>
+        <.td><%= bottle.volume %></.td>
+        <.td><%= bottle.abv %></.td>
+        <.td>
+          <span><%= live_redirect bottle.shelf.name, to: Routes.shelf_show_path(@socket, :show, bottle.shelf) %></span>
+        </.td>
 
-        <td>
+        <.td>
           <span><%= live_redirect "Show", to: Routes.bottle_show_path(@socket, :show, bottle) %></span>
           <span><%= live_patch "Edit", to: Routes.bottle_index_path(@socket, :edit, bottle) %></span>
           <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: bottle.id, data: [confirm: "Are you sure?"] %></span>
-        </td>
-      </tr>
+        </.td>
+      </.tr>
     <% end %>
-  </tbody>
-</table>
+  </.table>
 
-<span><%= live_patch "New Bottle", to: Routes.bottle_index_path(@socket, :new) %></span>
+
+  <span>
+    <.button link_type="live_patch" to={Routes.bottle_index_path(@socket, :new)} label="New Bottle" />
+  </span>
+
+</.tabbed_container>
