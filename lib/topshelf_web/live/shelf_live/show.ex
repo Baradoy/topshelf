@@ -21,7 +21,8 @@ defmodule TopshelfWeb.ShelfLive.Show do
 
   @impl true
   def handle_event("close_modal", _, socket) do
-    {:noreply, push_patch(socket, to: Routes.shelf_show_path(socket, :index, socket.assigns.shelf))}
+    {:noreply,
+     push_patch(socket, to: Routes.shelf_show_path(socket, :index, socket.assigns.shelf))}
   end
 
   defp page_title(:show), do: "Show Shelf"

@@ -16,7 +16,7 @@ defmodule Topshelf.Factory do
       name: "some name",
       type: "some type",
       image_url: "https://example.com/image",
-      volume: "some volume",
+      volume: "750ml",
       shelf: build(:shelf)
     }
   end
@@ -26,6 +26,14 @@ defmodule Topshelf.Factory do
       directions: "some directions",
       image_url: "https://example.com/image",
       name: "some name"
+    }
+  end
+
+  def ingredient_factory do
+    %Topshelf.Cocktails.Ingredient{
+      volume: "1oz",
+      recipe: build(:recipe),
+      bottle: build(:bottle)
     }
   end
 end

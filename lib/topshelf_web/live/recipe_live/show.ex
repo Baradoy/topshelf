@@ -24,7 +24,7 @@ defmodule TopshelfWeb.RecipeLive.Show do
 
   @impl true
   def handle_event("close_modal", _, socket) do
-    {:noreply, push_patch(socket, to: Routes.recipe_show_path(socket, :index, socket.assigns.recipe))}
+    {:noreply,
+     push_patch(socket, to: Routes.recipe_show_path(socket, :index, socket.assigns.recipe))}
   end
-
 end

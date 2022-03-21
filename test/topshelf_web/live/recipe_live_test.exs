@@ -5,7 +5,11 @@ defmodule TopshelfWeb.RecipeLiveTest do
   import Phoenix.LiveViewTest
 
   @create_attrs %{directions: "some directions", image_url: "some image_url", name: "some name"}
-  @update_attrs %{directions: "some updated directions", image_url: "some updated image_url", name: "some updated name"}
+  @update_attrs %{
+    directions: "some updated directions",
+    image_url: "some updated image_url",
+    name: "some updated name"
+  }
   @invalid_attrs %{directions: nil, image_url: nil, name: nil}
 
   defp create_recipe(_) do
