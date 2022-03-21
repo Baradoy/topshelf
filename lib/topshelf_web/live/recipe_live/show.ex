@@ -1,10 +1,10 @@
-defmodule TopshelfWeb.BottleLive.Show do
+defmodule TopshelfWeb.RecipeLive.Show do
   use TopshelfWeb, :live_view
 
   use PetalComponents
   import TopshelfWeb.LiveComponents
 
-  alias Topshelf.Inventory
+  alias Topshelf.Cocktails
 
   @impl true
   def mount(_params, _session, socket) do
@@ -16,15 +16,15 @@ defmodule TopshelfWeb.BottleLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:bottle, Inventory.get_bottle!(id))
-     |> assign(:shelves, Inventory.list_shelves())}
+     |> assign(:recipe, Cocktails.get_recipe!(id))}
   end
 
-  defp page_title(:show), do: "Show Bottle"
-  defp page_title(:edit), do: "Edit Bottle"
+  defp page_title(:show), do: "Show Recipe"
+  defp page_title(:edit), do: "Edit Recipe"
 
   @impl true
   def handle_event("close_modal", _, socket) do
-    {:noreply, push_patch(socket, to: Routes.bottle_show_path(socket, :index, socket.assigns.bottle))}
+    {:noreply, push_patch(socket, to: Routes.recipe_show_path(socket, :index, socket.assigns.recipe))}
   end
+
 end

@@ -20,4 +20,12 @@ defmodule Topshelf.Factory do
       shelf: build(:shelf)
     }
   end
+
+  def recipe_factory do
+    %Topshelf.Cocktails.Recipe{
+      directions: "some directions",
+      image_url: "https://example.com/image",
+      name: "some name"
+    }
+  end
 end

@@ -119,9 +119,6 @@ defmodule Topshelf.Inventory do
       {:search, search}, query ->
         s = "%#{search}%"
         query |> where([b], like(b.brand, ^s) or like(b.name, ^s) or like(b.type, ^s))
-
-      {:search, ""}, query ->
-        query
     end)
     |> preload(:shelf)
     |> Repo.all()

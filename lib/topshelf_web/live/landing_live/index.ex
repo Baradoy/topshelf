@@ -5,7 +5,6 @@ defmodule TopshelfWeb.LandingLive.Index do
   import TopshelfWeb.LiveComponents
 
   alias Topshelf.Inventory
-  alias Topshelf.Inventory.Bottle
 
   alias TopshelfWeb.LandingLive.Search
 
