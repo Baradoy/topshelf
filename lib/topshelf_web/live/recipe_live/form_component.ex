@@ -7,7 +7,7 @@ defmodule TopshelfWeb.RecipeLive.FormComponent do
 
   @impl true
   def update(%{recipe: recipe} = assigns, socket) do
-    changeset = Cocktails.change_recipe(recipe)
+    changeset = Cocktails.recipe_changeset(recipe)
 
     {:ok,
      socket
@@ -16,10 +16,24 @@ defmodule TopshelfWeb.RecipeLive.FormComponent do
   end
 
   @impl true
+  def handle_event("add_ingredient", _params, socket) do
+    changeset = Cocktails.recipe_add_ingredient_changeset(socket.assigns.changeset)
+
+    {:noreply, assign(socket, :changeset, changeset)}
+  end
+
+  @impl true
+  def handle_event("remove_ingredient", %{"value" => index}, socket) do
+    {index, ""} = Integer.parse(index)
+    changeset = Cocktails.recipe_remove_ingredient_changeset(socket.assigns.changeset, index)
+
+    {:noreply, assign(socket, :changeset, changeset)}
+  end
+
   def handle_event("validate", %{"recipe" => recipe_params}, socket) do
     changeset =
       socket.assigns.recipe
-      |> Cocktails.change_recipe(recipe_params)
+      |> Cocktails.recipe_changeset(recipe_params)
       |> Map.put(:action, :validate)
 
     {:noreply, assign(socket, :changeset, changeset)}

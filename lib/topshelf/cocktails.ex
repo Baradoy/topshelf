@@ -18,7 +18,9 @@ defmodule Topshelf.Cocktails do
 
   """
   def list_recipes do
-    Repo.all(Recipe)
+    Recipe
+    |> preload(ingredients: [:bottle])
+    |> Repo.all()
   end
 
   @doc """
@@ -35,7 +37,11 @@ defmodule Topshelf.Cocktails do
       ** (Ecto.NoResultsError)
 
   """
-  def get_recipe!(id), do: Repo.get!(Recipe, id)
+  def get_recipe!(id) do
+    Recipe
+    |> preload(ingredients: [:bottle])
+    |> Repo.get!(id)
+  end
 
   @doc """
   Creates a recipe.
@@ -94,12 +100,44 @@ defmodule Topshelf.Cocktails do
 
   ## Examples
 
-      iex> change_recipe(recipe)
+      iex> recipe_changeset(recipe)
       %Ecto.Changeset{data: %Recipe{}}
 
   """
-  def change_recipe(%Recipe{} = recipe, attrs \\ %{}) do
+  def recipe_changeset(%Recipe{} = recipe, attrs \\ %{}) do
     Recipe.changeset(recipe, attrs)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` with a fresh ingredient
+
+  ## Examples
+
+      iex> recipe_add_ingredient_changeset(recipe)
+      %Ecto.Changeset{data: %Recipe{}}
+
+  """
+  def recipe_add_ingredient_changeset(%Ecto.Changeset{} = changeset)
+      when is_struct(changeset.data, Recipe) do
+    {_, ingredients} = Ecto.Changeset.fetch_field(changeset, :ingredients)
+
+    Ecto.Changeset.put_assoc(changeset, :ingredients, ingredients ++ [%{volume: "1oz"}])
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` with an ingredient removed at index
+
+  ## Examples
+
+      iex> recipe_remove_ingredient_changeset(recipe, index)
+      %Ecto.Changeset{data: %Recipe{}}
+
+  """
+  def recipe_remove_ingredient_changeset(%Ecto.Changeset{} = changeset, index)
+      when is_struct(changeset.data, Recipe) do
+    {_, ingredients} = Ecto.Changeset.fetch_field(changeset, :ingredients)
+
+    Ecto.Changeset.put_assoc(changeset, :ingredients, List.delete_at(ingredients, index))
   end
 
   alias Topshelf.Cocktails.Ingredient

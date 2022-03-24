@@ -4,19 +4,18 @@ defmodule Topshelf.CocktailsTest do
   import Topshelf.Factory
 
   alias Topshelf.Cocktails
+  alias Topshelf.Cocktails.Recipe
 
   describe "recipes" do
-    alias Topshelf.Cocktails.Recipe
-
     @invalid_attrs %{directions: nil, image_url: nil, name: nil}
 
     test "list_recipes/0 returns all recipes" do
-      recipe = insert(:recipe)
+      recipe = insert(:recipe) |> preload()
       assert Cocktails.list_recipes() == [recipe]
     end
 
     test "get_recipe!/1 returns the recipe with given id" do
-      recipe = insert(:recipe)
+      recipe = insert(:recipe) |> preload()
       assert Cocktails.get_recipe!(recipe.id) == recipe
     end
 
@@ -38,7 +37,7 @@ defmodule Topshelf.CocktailsTest do
     end
 
     test "update_recipe/2 with valid data updates the recipe" do
-      recipe = insert(:recipe)
+      recipe = insert(:recipe) |> preload()
 
       update_attrs = %{
         directions: "some updated directions",
@@ -53,7 +52,7 @@ defmodule Topshelf.CocktailsTest do
     end
 
     test "update_recipe/2 with invalid data returns error changeset" do
-      recipe = insert(:recipe)
+      recipe = insert(:recipe) |> preload()
       assert {:error, %Ecto.Changeset{}} = Cocktails.update_recipe(recipe, @invalid_attrs)
       assert recipe == Cocktails.get_recipe!(recipe.id)
     end
@@ -64,9 +63,9 @@ defmodule Topshelf.CocktailsTest do
       assert_raise Ecto.NoResultsError, fn -> Cocktails.get_recipe!(recipe.id) end
     end
 
-    test "change_recipe/1 returns a recipe changeset" do
-      recipe = insert(:recipe)
-      assert %Ecto.Changeset{} = Cocktails.change_recipe(recipe)
+    test "recipe_changeset/1 returns a recipe changeset" do
+      recipe = insert(:recipe) |> preload()
+      assert %Ecto.Changeset{} = Cocktails.recipe_changeset(recipe)
     end
   end
 
@@ -86,7 +85,8 @@ defmodule Topshelf.CocktailsTest do
     end
 
     test "create_ingredient/1 with valid data creates a ingredient" do
-      valid_attrs = %{volume: "some volume"}
+      bottle = insert(:bottle)
+      valid_attrs = %{volume: "some volume", bottle_id: bottle.id}
 
       assert {:ok, %Ingredient{} = ingredient} = Cocktails.create_ingredient(valid_attrs)
       assert ingredient.volume == "some volume"
@@ -122,5 +122,9 @@ defmodule Topshelf.CocktailsTest do
       ingredient = insert(:ingredient)
       assert %Ecto.Changeset{} = Cocktails.change_ingredient(ingredient)
     end
+  end
+
+  defp preload(%Recipe{} = recipie) do
+    Repo.preload(recipie, :ingredients)
   end
 end

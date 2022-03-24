@@ -17,9 +17,7 @@ defmodule Topshelf.Cocktails.Ingredient do
   @doc false
   def changeset(ingredient, attrs) do
     ingredient
-    |> cast(attrs, [:volume])
-    |> cast_assoc(:recipe)
-    |> cast_assoc(:bottle)
-    |> validate_required([:volume])
+    |> cast(attrs, [:volume, :bottle_id])
+    |> validate_required([:volume, :bottle_id])
   end
 end

@@ -4,12 +4,16 @@ defmodule TopshelfWeb.RecipeLive.Index do
   use PetalComponents
   import TopshelfWeb.LiveComponents
 
+  alias Topshelf.Inventory
   alias Topshelf.Cocktails
   alias Topshelf.Cocktails.Recipe
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :recipes, list_recipes())}
+    {:ok,
+     socket
+     |> assign(:recipes, list_recipes())
+     |> assign(:bottles, list_bottles())}
   end
 
   @impl true
@@ -50,5 +54,9 @@ defmodule TopshelfWeb.RecipeLive.Index do
 
   defp list_recipes do
     Cocktails.list_recipes()
+  end
+
+  defp list_bottles do
+    Inventory.list_bottles()
   end
 end

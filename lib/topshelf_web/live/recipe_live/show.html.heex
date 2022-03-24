@@ -8,12 +8,13 @@
       title={@page_title}
       action={@live_action}
       recipe={@recipe}
+      bottles={@bottles}
       return_to={Routes.recipe_show_path(@socket, :show, @recipe)}
     />
   </.modal>
 <% end %>
 
-<.tabbed_container recipe>
+<.tabbed_container recipes>
   <.card class="max-w-sm">
      <.card_media src={ @recipe.image_url } />
     <.card_content heading={ @recipe.name }>

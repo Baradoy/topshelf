@@ -5,6 +5,7 @@ defmodule TopshelfWeb.RecipeLive.Show do
   import TopshelfWeb.LiveComponents
 
   alias Topshelf.Cocktails
+  alias Topshelf.Inventory
 
   @impl true
   def mount(_params, _session, socket) do
@@ -16,7 +17,8 @@ defmodule TopshelfWeb.RecipeLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:recipe, Cocktails.get_recipe!(id))}
+     |> assign(:recipe, Cocktails.get_recipe!(id))
+     |> assign(:bottles, list_bottles())}
   end
 
   defp page_title(:show), do: "Show Recipe"
@@ -26,5 +28,9 @@ defmodule TopshelfWeb.RecipeLive.Show do
   def handle_event("close_modal", _, socket) do
     {:noreply,
      push_patch(socket, to: Routes.recipe_show_path(socket, :index, socket.assigns.recipe))}
+  end
+
+  defp list_bottles do
+    Inventory.list_bottles()
   end
 end
