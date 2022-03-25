@@ -20,8 +20,13 @@ defmodule Topshelf.Measurements do
   end
 
   def to_measure(volume) when is_binary(volume), do: Float.parse(volume)
+  def to_measure(nil), do: :infintite
+
   def percent_of_measure({amount, unit}, percent), do: {amount * percent, unit}
+  def percent_of_measure(:infintite, _percent), do: :infintite
+
   def measure_to_percent({remaining, unit}, {total, unit}), do: remaining / total
+  def measure_to_percent(:infintite, :infintite), do: 1.0
 
   def pour(container, pour) when is_binary(container) and is_binary(pour) do
     pour(to_measure(container), to_measure(pour))
@@ -38,6 +43,8 @@ defmodule Topshelf.Measurements do
       _ -> {0.0, unit}
     end
   end
+
+  def pour(:infintite, {_pour_amount, _unit}), do: :infintite
 
   def convert({amount, unit}, destination_unit)
       when unit in @units and destination_unit in @units do

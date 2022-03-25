@@ -177,6 +177,25 @@ defmodule Topshelf.CocktailsTest do
         assert bottle.remaining_percent == 99
       end)
     end
+
+    test "pour_recipe/2 pours a cocktail with an ingredient without a volume" do
+      recipe =
+        insert(:recipe,
+          ingredients: [
+            build(:ingredient,
+              volume: "1.5oz",
+              bottle: build(:bottle, volume: nil, remaining_percent: 100)
+            )
+          ]
+        )
+        |> preload()
+
+      {:ok, multi} = Cocktails.pour_recipe(recipe)
+
+      Enum.each(multi, fn {_k, bottle} ->
+        assert bottle.remaining_percent == 100
+      end)
+    end
   end
 
   defp preload(%Recipe{} = recipie) do

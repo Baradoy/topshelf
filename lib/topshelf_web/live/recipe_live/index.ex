@@ -48,6 +48,18 @@ defmodule TopshelfWeb.RecipeLive.Index do
   end
 
   @impl true
+  def handle_event("pour_cocktail", %{"value" => id}, socket) do
+    recipe = Cocktails.get_recipe!(id)
+    {:ok, _} = Cocktails.pour_recipe(recipe)
+
+    socket =
+      socket
+      |> put_flash(:info, "Poured a #{recipe.name}. Bottles have been updated.")
+      |> assign(:recipes, list_recipes())
+
+    {:noreply, socket}
+  end
+
   def handle_event("close_modal", _, socket) do
     {:noreply, push_patch(socket, to: Routes.recipe_index_path(socket, :index))}
   end
