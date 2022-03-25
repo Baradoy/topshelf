@@ -5,8 +5,11 @@ defmodule Topshelf.Cocktails do
 
   import Ecto.Query, warn: false
   alias Topshelf.Repo
+  alias Ecto.Multi
 
   alias Topshelf.Cocktails.Recipe
+  alias Topshelf.Inventory
+  alias Topshelf.Measurements
 
   @doc """
   Returns the list of recipes.
@@ -19,7 +22,7 @@ defmodule Topshelf.Cocktails do
   """
   def list_recipes do
     Recipe
-    |> preload(ingredients: [:bottle])
+    |> preload()
     |> Repo.all()
   end
 
@@ -39,7 +42,7 @@ defmodule Topshelf.Cocktails do
   """
   def get_recipe!(id) do
     Recipe
-    |> preload(ingredients: [:bottle])
+    |> preload()
     |> Repo.get!(id)
   end
 
@@ -93,6 +96,28 @@ defmodule Topshelf.Cocktails do
   """
   def delete_recipe(%Recipe{} = recipe) do
     Repo.delete(recipe)
+  end
+
+  @doc """
+  Pour a recipe.
+
+  ## Examples
+
+      iex> pour_recipe(recipe)
+      {:ok, multi}
+
+  """
+  def pour_recipe(%Recipe{} = recipe) do
+    recipe |> pour_recipe_multi() |> Repo.transaction()
+  end
+
+  def pour_recipe_multi(%Recipe{} = recipe, multi \\ Multi.new()) do
+    Enum.reduce(recipe.ingredients, multi, fn ingredient, multi ->
+      volume = Measurements.to_measure(ingredient.volume)
+      changeset = Inventory.pour_bottle_changeset(ingredient.bottle, volume)
+
+      Multi.update(multi, {:bottle, ingredient.bottle_id}, changeset)
+    end)
   end
 
   @doc """
@@ -153,7 +178,7 @@ defmodule Topshelf.Cocktails do
   """
   def list_ingredients do
     Ingredient
-    |> preload([:recipe, bottle: [:shelf]])
+    |> preload()
     |> Repo.all()
   end
 
@@ -173,7 +198,7 @@ defmodule Topshelf.Cocktails do
   """
   def get_ingredient!(id) do
     Ingredient
-    |> preload([:recipe, bottle: [:shelf]])
+    |> preload()
     |> Repo.get!(id)
   end
 
@@ -241,4 +266,7 @@ defmodule Topshelf.Cocktails do
   def change_ingredient(%Ingredient{} = ingredient, attrs \\ %{}) do
     Ingredient.changeset(ingredient, attrs)
   end
+
+  defp preload(Recipe), do: Ecto.Query.preload(Recipe, ingredients: [bottle: :shelf])
+  defp preload(Ingredient), do: Ecto.Query.preload(Ingredient, [:recipe, bottle: [:shelf]])
 end

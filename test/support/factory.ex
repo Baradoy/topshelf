@@ -25,14 +25,14 @@ defmodule Topshelf.Factory do
     %Topshelf.Cocktails.Recipe{
       directions: "some directions",
       image_url: "https://example.com/image",
-      name: "some name"
+      name: "some name",
+      ingredients: build_list(3, :ingredient)
     }
   end
 
   def ingredient_factory do
     %Topshelf.Cocktails.Ingredient{
       volume: "1oz",
-      recipe: build(:recipe),
       bottle: build(:bottle)
     }
   end

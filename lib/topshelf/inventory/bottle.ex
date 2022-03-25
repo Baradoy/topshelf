@@ -1,6 +1,7 @@
 defmodule Topshelf.Inventory.Bottle do
   use Ecto.Schema
   import Ecto.Changeset
+  import Topshelf.Measurements, only: [validate_measurement: 2]
 
   alias Topshelf.Cocktails.Ingredient
   alias Topshelf.Inventory.Shelf
@@ -36,5 +37,6 @@ defmodule Topshelf.Inventory.Bottle do
       :remaining_percent
     ])
     |> validate_required([:name, :shelf_id])
+    |> validate_measurement(:volume)
   end
 end

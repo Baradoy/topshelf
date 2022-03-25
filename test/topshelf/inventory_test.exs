@@ -95,7 +95,7 @@ defmodule Topshelf.InventoryTest do
         name: "some name",
         type: "some type",
         image_url: "some url",
-        volume: "some volume",
+        volume: "750ml",
         shelf_id: shelf.id
       }
 
@@ -106,7 +106,7 @@ defmodule Topshelf.InventoryTest do
       assert bottle.name == "some name"
       assert bottle.type == "some type"
       assert bottle.image_url == "some url"
-      assert bottle.volume == "some volume"
+      assert bottle.volume == "750ml"
     end
 
     test "create_bottle/1 with invalid data returns error changeset" do
@@ -123,7 +123,7 @@ defmodule Topshelf.InventoryTest do
         name: "some updated name",
         type: "some updated type",
         image_url: "some updated url",
-        volume: "some updated volume"
+        volume: "1.5oz"
       }
 
       assert {:ok, %Bottle{} = bottle} = Inventory.update_bottle(bottle, update_attrs)
@@ -133,7 +133,7 @@ defmodule Topshelf.InventoryTest do
       assert bottle.name == "some updated name"
       assert bottle.type == "some updated type"
       assert bottle.image_url == "some updated url"
-      assert bottle.volume == "some updated volume"
+      assert bottle.volume == "1.5oz"
     end
 
     test "update_bottle/2 with invalid data returns error changeset" do
@@ -151,6 +151,24 @@ defmodule Topshelf.InventoryTest do
     test "change_bottle/1 returns a bottle changeset" do
       bottle = insert(:bottle)
       assert %Ecto.Changeset{} = Inventory.change_bottle(bottle)
+    end
+
+    test "pour_bottle_changeset/2 pours from a full bottle" do
+      bottle = insert(:bottle, volume: "750ml", remaining_percent: 100)
+
+      assert %Ecto.Changeset{changes: changes} =
+               Inventory.pour_bottle_changeset(bottle, {1.0, "oz"})
+
+      assert changes == %{remaining_percent: 96}
+    end
+
+    test "pour_bottle_changeset/2 pours from an almost empty full" do
+      bottle = insert(:bottle, volume: "750ml", remaining_percent: 3)
+
+      assert %Ecto.Changeset{changes: changes} =
+               Inventory.pour_bottle_changeset(bottle, {1.0, "oz"})
+
+      assert changes == %{remaining_percent: 0}
     end
   end
 end

@@ -9,7 +9,7 @@ defmodule Topshelf.Cocktails.Recipe do
     field :image_url, :string
     field :name, :string
 
-    has_many :ingredients, Ingredient, on_replace: :delete
+    has_many :ingredients, Ingredient, on_replace: :delete, on_delete: :delete_all
 
     timestamps()
   end
