@@ -21,19 +21,26 @@ defmodule TopshelfWeb.Router do
     live_session :default do
       live "/", LandingLive.Index, :index
 
+      # Shelves
       live "/shelves", ShelfLive.Index, :index
       live "/shelves/new", ShelfLive.Index, :new
       live "/shelves/:id/edit", ShelfLive.Index, :edit
-
       live "/shelves/:id", ShelfLive.Show, :show
       live "/shelves/:id/show/edit", ShelfLive.Show, :edit
 
+      # Bottles
       live "/bottles", BottleLive.Index, :index
       live "/bottles/new", BottleLive.Index, :new
       live "/bottles/:id/edit", BottleLive.Index, :edit
-
       live "/bottles/:id", BottleLive.Show, :show
       live "/bottles/:id/show/edit", BottleLive.Show, :edit
+
+      # Recipes
+      live "/recipes", RecipeLive.Index, :index
+      live "/recipes/new", RecipeLive.Index, :new
+      live "/recipes/:id/edit", RecipeLive.Index, :edit
+      live "/recipes/:id", RecipeLive.Show, :show
+      live "/recipes/:id/show/edit", RecipeLive.Show, :edit
     end
   end
 

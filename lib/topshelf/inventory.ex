@@ -7,6 +7,7 @@ defmodule Topshelf.Inventory do
   alias Topshelf.Repo
 
   alias Topshelf.Inventory.Shelf
+  alias Topshelf.Measurements
 
   @doc """
   Returns the list of shelves.
@@ -119,9 +120,6 @@ defmodule Topshelf.Inventory do
       {:search, search}, query ->
         s = "%#{search}%"
         query |> where([b], like(b.brand, ^s) or like(b.name, ^s) or like(b.type, ^s))
-
-      {:search, ""}, query ->
-        query
     end)
     |> preload(:shelf)
     |> Repo.all()
@@ -210,5 +208,26 @@ defmodule Topshelf.Inventory do
   """
   def change_bottle(%Bottle{} = bottle, attrs \\ %{}) do
     Bottle.changeset(bottle, attrs)
+  end
+
+  @doc """
+  A changeset for a pour of a bottle
+
+  ## Examples
+
+      iex> pour_bottle_changeset(bottle)
+      %Ecto.Changeset{data: %Bottle{}, changes: %{remaining_percent: ...}}
+
+  """
+  def pour_bottle_changeset(%Bottle{} = bottle, {amount, unit}) do
+    volume = Measurements.to_measure(bottle.volume)
+
+    remaining_percent =
+      volume
+      |> Measurements.percent_of_measure(bottle.remaining_percent / 100.0)
+      |> Measurements.pour({amount, unit})
+      |> Measurements.measure_to_percent(volume)
+
+    Bottle.changeset(bottle, %{remaining_percent: trunc(remaining_percent * 100)})
   end
 end

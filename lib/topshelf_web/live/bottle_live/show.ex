@@ -25,6 +25,7 @@ defmodule TopshelfWeb.BottleLive.Show do
 
   @impl true
   def handle_event("close_modal", _, socket) do
-    {:noreply, push_patch(socket, to: Routes.bottle_index_path(socket, :index))}
+    {:noreply,
+     push_patch(socket, to: Routes.bottle_show_path(socket, :index, socket.assigns.bottle))}
   end
 end

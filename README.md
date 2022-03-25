@@ -13,9 +13,9 @@ Deloyment goals of Topshelf are to be easily deployed to fly.io or to a Raspberr
 ## Coming Features
 
 - *Deployment instructions*. Deploying this to run yourself should be really easy. Instructions on how to do that are essential.
-- *Cocktail Recipies*. A list of coctail recipies with a list of bottles to pull out and from where.
+- *Cocktail Recipes*. A list of coctail recipes with a list of bottles to pull out and from where.
 - *Shopping List*. A list that has all of the bottles that are low or empty. Differentiate between bottles that a staples and one offs.
-- *Make cocktail button*. Reduce a bottles remaining volume by the amount a recipie calls for when a cocktail is made.
+- *Make cocktail button*. Reduce a bottles remaining volume by the amount a recipe calls for when a cocktail is made.
 - *Empty bottle button*. Mark a bottle as completely used with a single button.
 - *New bottle button*. Mark a brand new bottle as bought with a single button click.
 - *Empty bottle display*. Show which bottles are empty in the lists. Show which coctails cannot be made because bottles are empty.

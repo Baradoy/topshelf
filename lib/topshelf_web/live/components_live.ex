@@ -50,14 +50,15 @@ defmodule TopshelfWeb.LiveComponents do
   def tabbed_container(assigns) do
     assigns =
       assigns
-      |> assign_new(:home, fn -> false end)
+      |> assign_new(:landing, fn -> false end)
       |> assign_new(:bottles, fn -> false end)
       |> assign_new(:shelves, fn -> false end)
+      |> assign_new(:recipes, fn -> false end)
 
     ~H"""
     <.container max_width="xl">
       <.tabs underline>
-        <.tab underline is_active={@home} link_type="live_redirect" to="/">
+        <.tab underline is_active={@landing} link_type="live_redirect" to="/">
           <Heroicons.Outline.device_mobile class="w-5 h-5 mr-2" />
             Home
         </.tab>
@@ -65,9 +66,13 @@ defmodule TopshelfWeb.LiveComponents do
           <Heroicons.Outline.beaker class="w-5 h-5 mr-2" />
             Bottles
         </.tab>
-        <.tab underline is_active={@shelves} link_type="live_redirect" to={ Routes.shelf_index_path(TopshelfWeb.Endpoint, :index) }> 
+        <.tab underline is_active={@shelves} link_type="live_redirect" to={ Routes.shelf_index_path(TopshelfWeb.Endpoint, :index) }>
           <Heroicons.Outline.library class="w-5 h-5 mr-2" />
             Shelves
+        </.tab>
+        <.tab underline is_active={@recipes} link_type="live_redirect" to={ Routes.recipe_index_path(TopshelfWeb.Endpoint, :index) }>
+          <Heroicons.Outline.clipboard_list class="w-5 h-5 mr-2" />
+          Recipes
         </.tab>
       </.tabs>
       <%= render_slot(@inner_block) %>

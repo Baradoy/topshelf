@@ -11,7 +11,7 @@ defmodule TopshelfWeb.BottleLiveTest do
     name: "some updated name",
     type: "some updated type",
     image_url: "some updated url",
-    volume: "some updated volume"
+    volume: "750ml"
   }
   @invalid_attrs %{
     abv: nil,
