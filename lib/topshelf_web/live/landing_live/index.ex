@@ -5,8 +5,10 @@ defmodule TopshelfWeb.LandingLive.Index do
   import TopshelfWeb.LiveComponents
 
   alias Topshelf.Inventory
+  alias Topshelf.Cocktails
 
   alias TopshelfWeb.LandingLive.Search
+  alias TopshelfWeb.RecipeLive.RecipeComponent
 
   @impl true
 
@@ -14,6 +16,7 @@ defmodule TopshelfWeb.LandingLive.Index do
     {:ok,
      socket
      |> assign(:bottles, list_bottles())
+     |> assign(:recipes, list_recipes())
      |> assign(:changeset, Search.changeset())}
   end
 
@@ -33,7 +36,24 @@ defmodule TopshelfWeb.LandingLive.Index do
     {:noreply, assign(socket, :bottles, bottles) |> assign(:changeset, changeset)}
   end
 
+  def handle_event("pour_cocktail", %{"value" => id}, socket) do
+    recipe = Cocktails.get_recipe!(id)
+    {:ok, _} = Cocktails.pour_recipe(recipe)
+
+    socket =
+      socket
+      |> put_flash(:info, "Poured a #{recipe.name}. Bottles have been updated.")
+      |> assign(:recipes, list_recipes())
+      |> assign(:bottles, list_bottles())
+
+    {:noreply, socket}
+  end
+
   defp list_bottles do
     Inventory.list_bottles()
+  end
+
+  defp list_recipes do
+    Cocktails.list_recipes()
   end
 end

@@ -1,0 +1,37 @@
+<div>
+  <.card class="max-w-sm">
+    <.card_media src={@recipe.image_url} />
+    <.card_content category="Cocktail" heading={@recipe.name}>
+
+    <div class="grid grid-cols-4 gap-x-1">
+      <%= for ingredient <- @recipe.ingredients do %>
+        <div class=""><.avatar name={ ingredient.bottle.name } size="xs" src={ ingredient.bottle.image_url } random_color /></div>
+        <div class="grow">
+          <%= ingredient.bottle.name %>
+          <%= ingredient.bottle.brand %>
+        </div>
+        <div class=""><%= ingredient.volume %></div>
+        <div class=""><%= ingredient.bottle.shelf.name %></div>
+        <div class="col-span-4 mb-4">
+          <.progress color={progress_color(ingredient.bottle.remaining_percent)} value={ingredient.bottle.remaining_percent} max={100} class="max-w-full" size="xs" />
+        </div>
+      <% end %>
+    </div>
+    <div>
+      <%= @recipe.directions %>
+    </div>
+    </.card_content>
+    <.card_footer>
+        <.button phx-click="pour_cocktail"
+          color="primary"
+          label="Pour Cocktail"
+          type="button"
+          size="xs"
+          variant="outline"
+          value={@recipe.id}
+        >
+          <Heroicons.Solid.beaker class="w-4 h-4 mr-2" />Pour
+        </.button>
+    </.card_footer>
+  </.card>
+</div>

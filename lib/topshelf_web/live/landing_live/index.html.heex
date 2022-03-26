@@ -1,4 +1,14 @@
 <.tabbed_container landing>
+  <div class="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 my-8">
+    <%= for recipe <- @recipes do %>
+      <.live_component
+        module={RecipeComponent}
+        id={recipe.id}
+        recipe={recipe}
+      />
+    <% end %>
+  </div>
+
   <.form
     let={f}
     for={@changeset}
