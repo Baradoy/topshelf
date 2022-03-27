@@ -4,36 +4,29 @@ defmodule TopshelfWeb.LandingLive.Index do
   use PetalComponents
   import TopshelfWeb.LiveComponents
 
-  alias Topshelf.Inventory
-
-  alias TopshelfWeb.LandingLive.Search
+  alias Topshelf.Cocktails
+  alias TopshelfWeb.RecipeLive.RecipeComponent
 
   @impl true
 
   def mount(_params, _session, socket) do
-    {:ok,
-     socket
-     |> assign(:bottles, list_bottles())
-     |> assign(:changeset, Search.changeset())}
+    {:ok, assign(socket, :recipes, list_recipes())}
   end
 
   @impl true
-  def handle_event("search", %{"search" => search_params}, socket) do
-    changeset = Search.changeset(search_params)
+  def handle_event("pour_cocktail", %{"value" => id}, socket) do
+    recipe = Cocktails.get_recipe!(id)
+    {:ok, _} = Cocktails.pour_recipe(recipe)
 
-    bottles =
-      case changeset do
-        %{valid?: true, changes: changes} ->
-          Inventory.list_bottles(changes)
+    socket =
+      socket
+      |> put_flash(:info, "Poured a #{recipe.name}. Bottles have been updated.")
+      |> assign(:recipes, list_recipes())
 
-        _ ->
-          Inventory.list_bottles()
-      end
-
-    {:noreply, assign(socket, :bottles, bottles) |> assign(:changeset, changeset)}
+    {:noreply, socket}
   end
 
-  defp list_bottles do
-    Inventory.list_bottles()
+  defp list_recipes do
+    Cocktails.list_recipes()
   end
 end
