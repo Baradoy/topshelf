@@ -7,9 +7,14 @@ defmodule TopshelfWeb.BottleLive.Index do
   alias Topshelf.Inventory
   alias Topshelf.Inventory.Bottle
 
+  alias TopshelfWeb.LandingLive.Search
+
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :bottles, list_bottles())}
+    {:ok,
+     socket
+     |> assign(:bottles, list_bottles())
+     |> assign(:changeset, Search.changeset())}
   end
 
   @impl true
@@ -43,6 +48,21 @@ defmodule TopshelfWeb.BottleLive.Index do
     {:ok, _} = Inventory.delete_bottle(bottle)
 
     {:noreply, assign(socket, :bottles, list_bottles())}
+  end
+
+  def handle_event("search", %{"search" => search_params}, socket) do
+    changeset = Search.changeset(search_params)
+
+    bottles =
+      case changeset do
+        %{valid?: true, changes: changes} ->
+          Inventory.list_bottles(changes)
+
+        _ ->
+          Inventory.list_bottles()
+      end
+
+    {:noreply, assign(socket, :bottles, bottles) |> assign(:changeset, changeset)}
   end
 
   def handle_event("close_modal", _, socket) do

@@ -13,6 +13,17 @@
 <% end %>
 
 <.tabbed_container bottles>
+  <.form
+    let={f}
+    for={@changeset}
+    id="search-form"
+    phx-submit="search"
+  >
+    <.form_label form={f} field={:search} />
+    <.search_input form={f} field={:search} />
+    <.form_field_error form={f} field={:search} class="mt-1" />
+  </.form>
+
   <.table>
     <.tr>
       <.th>Bottle</.th>
