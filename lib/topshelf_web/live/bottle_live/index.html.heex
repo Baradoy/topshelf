@@ -52,14 +52,16 @@
           />
         </.td>
         <.td><%= bottle.type %></.td>
-        <.td><%= bottle.remaining_percent %> of <%= bottle.volume %></.td>
+        <.td><%= bottle.remaining_percent %>% of <%= bottle.volume %></.td>
         <.td><%= bottle.abv %></.td>
         <.td>
           <span><%= live_redirect bottle.shelf.name, to: Routes.shelf_show_path(@socket, :show, bottle.shelf) %></span>
         </.td>
 
         <.td>
-          <span><%= live_redirect "Show", to: Routes.bottle_show_path(@socket, :show, bottle) %></span>
+          <span><%= link "Fill", to: "#", phx_click: "fill", phx_value_id: bottle.id, data: [confirm: "Are you sure?"] %></span>
+          <span><%= link "Empty", to: "#", phx_click: "empty", phx_value_id: bottle.id, data: [confirm: "Are you sure?"] %></span>
+
           <span><%= live_patch "Edit", to: Routes.bottle_index_path(@socket, :edit, bottle) %></span>
           <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: bottle.id, data: [confirm: "Are you sure?"] %></span>
         </.td>
