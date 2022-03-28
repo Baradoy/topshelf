@@ -8,7 +8,6 @@ defmodule TopshelfWeb.LandingLive.Index do
   alias TopshelfWeb.RecipeLive.RecipeComponent
 
   @impl true
-
   def mount(_params, _session, socket) do
     {:ok, assign(socket, :recipes, list_recipes())}
   end

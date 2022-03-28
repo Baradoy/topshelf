@@ -13,7 +13,7 @@ defmodule TopshelfWeb.BottleLive.Index do
   def mount(_params, _session, socket) do
     {:ok,
      socket
-     |> assign(:bottles, list_bottles())
+     |> assign(:bottles, [])
      |> assign(:changeset, Search.changeset())}
   end
 
@@ -40,6 +40,17 @@ defmodule TopshelfWeb.BottleLive.Index do
     socket
     |> assign(:page_title, "Bottles")
     |> assign(:bottle, nil)
+    |> assign(:bottles, Inventory.list_bottles())
+  end
+
+  defp apply_action(socket, :shopping, _params) do
+    changeset = Search.changeset(%{percent: 20})
+
+    socket
+    |> assign(:page_title, "Shopping List")
+    |> assign(:bottle, nil)
+    |> assign(:changeset, changeset)
+    |> assign(:bottles, Inventory.list_bottles(changeset.changes))
   end
 
   @impl true
@@ -53,16 +64,10 @@ defmodule TopshelfWeb.BottleLive.Index do
   def handle_event("search", %{"search" => search_params}, socket) do
     changeset = Search.changeset(search_params)
 
-    bottles =
-      case changeset do
-        %{valid?: true, changes: changes} ->
-          Inventory.list_bottles(changes)
-
-        _ ->
-          Inventory.list_bottles()
-      end
-
-    {:noreply, assign(socket, :bottles, bottles) |> assign(:changeset, changeset)}
+    {:noreply,
+     socket
+     |> assign(:bottles, Inventory.list_bottles(changeset.changes))
+     |> assign(:changeset, changeset)}
   end
 
   def handle_event("close_modal", _, socket) do

@@ -12,16 +12,24 @@
   </.modal>
 <% end %>
 
-<.tabbed_container bottles>
+<.tabbed_container bottles={@live_action == :index} shopping={@live_action == :shopping}>
   <.form
     let={f}
     for={@changeset}
     id="search-form"
-    phx-submit="search"
+    phx-change="search"
   >
-    <.form_label form={f} field={:search} />
-    <.search_input form={f} field={:search} />
-    <.form_field_error form={f} field={:search} class="mt-1" />
+    <%= if @live_action == :index do %>
+      <.form_label form={f} field={:search} />
+      <.search_input form={f} field={:search} phx-debounce="300"/>
+      <.form_field_error form={f} field={:search} class="mt-1" />
+    <% end %>
+
+    <%= if @live_action == :shopping do %>
+      <.form_label form={f} field={:percent} />
+      <.range_input form={f} field={:percent} />
+      <.form_field_error form={f} field={:percent} class="mt-1" />
+    <% end %>
   </.form>
 
   <.table>

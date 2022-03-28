@@ -51,6 +51,7 @@ defmodule TopshelfWeb.LiveComponents do
     assigns =
       assigns
       |> assign_new(:landing, fn -> false end)
+      |> assign_new(:shopping, fn -> false end)
       |> assign_new(:bottles, fn -> false end)
       |> assign_new(:shelves, fn -> false end)
       |> assign_new(:recipes, fn -> false end)
@@ -59,8 +60,12 @@ defmodule TopshelfWeb.LiveComponents do
     <.container max_width="xl">
       <.tabs underline>
         <.tab underline is_active={@landing} link_type="live_redirect" to="/">
-          <Heroicons.Outline.device_mobile class="w-5 h-5 mr-2" />
+          <Heroicons.Outline.sparkles class="w-5 h-5 mr-2" />
             Home
+        </.tab>
+        <.tab underline is_active={@shopping} link_type="live_redirect" to={ Routes.bottle_index_path(TopshelfWeb.Endpoint, :shopping) }>
+          <Heroicons.Outline.clipboard_list class="w-5 h-5 mr-2" />
+            Shopping
         </.tab>
         <.tab underline is_active={@bottles} link_type="live_redirect" to={ Routes.bottle_index_path(TopshelfWeb.Endpoint, :index) }>
           <Heroicons.Outline.beaker class="w-5 h-5 mr-2" />
@@ -71,7 +76,7 @@ defmodule TopshelfWeb.LiveComponents do
             Shelves
         </.tab>
         <.tab underline is_active={@recipes} link_type="live_redirect" to={ Routes.recipe_index_path(TopshelfWeb.Endpoint, :index) }>
-          <Heroicons.Outline.clipboard_list class="w-5 h-5 mr-2" />
+          <Heroicons.Outline.server class="w-5 h-5 mr-2" />
           Recipes
         </.tab>
       </.tabs>

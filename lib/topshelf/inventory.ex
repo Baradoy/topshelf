@@ -120,6 +120,9 @@ defmodule Topshelf.Inventory do
       {:search, search}, query ->
         s = "%#{search}%"
         query |> where([b], like(b.brand, ^s) or like(b.name, ^s) or like(b.type, ^s))
+
+      {:percent, percent}, query ->
+        query |> where([b], b.remaining_percent <= ^percent)
     end)
     |> preload(:shelf)
     |> Repo.all()
