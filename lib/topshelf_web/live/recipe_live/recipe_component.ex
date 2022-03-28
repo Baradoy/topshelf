@@ -3,7 +3,7 @@ defmodule TopshelfWeb.RecipeLive.RecipeComponent do
 
   use PetalComponents
   @impl true
-  def update(%{recipe: recipe} = assigns, socket) do
+  def update(assigns, socket) do
     socket = socket |> assign(assigns)
     {:ok, socket}
   end

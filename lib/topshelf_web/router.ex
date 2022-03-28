@@ -30,6 +30,7 @@ defmodule TopshelfWeb.Router do
 
       # Bottles
       live "/bottles", BottleLive.Index, :index
+      live "/shopping", BottleLive.Index, :shopping
       live "/bottles/new", BottleLive.Index, :new
       live "/bottles/:id/edit", BottleLive.Index, :edit
       live "/bottles/:id", BottleLive.Show, :show

@@ -12,16 +12,24 @@
   </.modal>
 <% end %>
 
-<.tabbed_container bottles>
+<.tabbed_container bottles={@live_action == :index} shopping={@live_action == :shopping}>
   <.form
     let={f}
     for={@changeset}
     id="search-form"
-    phx-submit="search"
+    phx-change="search"
   >
-    <.form_label form={f} field={:search} />
-    <.search_input form={f} field={:search} />
-    <.form_field_error form={f} field={:search} class="mt-1" />
+    <%= if @live_action == :index do %>
+      <.form_label form={f} field={:search} />
+      <.search_input form={f} field={:search} phx-debounce="300"/>
+      <.form_field_error form={f} field={:search} class="mt-1" />
+    <% end %>
+
+    <%= if @live_action == :shopping do %>
+      <.form_label form={f} field={:percent} />
+      <.range_input form={f} field={:percent} />
+      <.form_field_error form={f} field={:percent} class="mt-1" />
+    <% end %>
   </.form>
 
   <.table>
@@ -44,14 +52,16 @@
           />
         </.td>
         <.td><%= bottle.type %></.td>
-        <.td><%= bottle.remaining_percent %> of <%= bottle.volume %></.td>
+        <.td><%= bottle.remaining_percent %>% of <%= bottle.volume %></.td>
         <.td><%= bottle.abv %></.td>
         <.td>
           <span><%= live_redirect bottle.shelf.name, to: Routes.shelf_show_path(@socket, :show, bottle.shelf) %></span>
         </.td>
 
         <.td>
-          <span><%= live_redirect "Show", to: Routes.bottle_show_path(@socket, :show, bottle) %></span>
+          <span><%= link "Fill", to: "#", phx_click: "fill", phx_value_id: bottle.id, data: [confirm: "Are you sure?"] %></span>
+          <span><%= link "Empty", to: "#", phx_click: "empty", phx_value_id: bottle.id, data: [confirm: "Are you sure?"] %></span>
+
           <span><%= live_patch "Edit", to: Routes.bottle_index_path(@socket, :edit, bottle) %></span>
           <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: bottle.id, data: [confirm: "Are you sure?"] %></span>
         </.td>

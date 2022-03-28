@@ -13,8 +13,8 @@ defmodule TopshelfWeb.BottleLive.Index do
   def mount(_params, _session, socket) do
     {:ok,
      socket
-     |> assign(:bottles, list_bottles())
-     |> assign(:changeset, Search.changeset())}
+     |> assign(:changeset, Search.changeset())
+     |> assign_bottles()}
   end
 
   @impl true
@@ -40,6 +40,18 @@ defmodule TopshelfWeb.BottleLive.Index do
     socket
     |> assign(:page_title, "Bottles")
     |> assign(:bottle, nil)
+    |> assign(:changeset, Search.changeset())
+    |> assign_bottles()
+  end
+
+  defp apply_action(socket, :shopping, _params) do
+    changeset = Search.changeset(%{percent: 20})
+
+    socket
+    |> assign(:page_title, "Shopping List")
+    |> assign(:bottle, nil)
+    |> assign(:changeset, changeset)
+    |> assign_bottles()
   end
 
   @impl true
@@ -47,29 +59,39 @@ defmodule TopshelfWeb.BottleLive.Index do
     bottle = Inventory.get_bottle!(id)
     {:ok, _} = Inventory.delete_bottle(bottle)
 
-    {:noreply, assign(socket, :bottles, list_bottles())}
+    {:noreply, assign_bottles(socket)}
+  end
+
+  def handle_event("empty", %{"id" => id}, socket) do
+    bottle = Inventory.get_bottle!(id)
+    {:ok, _} = Inventory.update_bottle(bottle, %{remaining_percent: 0})
+
+    {:noreply, assign_bottles(socket)}
+  end
+
+  def handle_event("fill", %{"id" => id}, socket) do
+    bottle = Inventory.get_bottle!(id)
+    {:ok, _} = Inventory.update_bottle(bottle, %{remaining_percent: 100})
+
+    {:noreply, assign_bottles(socket)}
   end
 
   def handle_event("search", %{"search" => search_params}, socket) do
     changeset = Search.changeset(search_params)
 
-    bottles =
-      case changeset do
-        %{valid?: true, changes: changes} ->
-          Inventory.list_bottles(changes)
-
-        _ ->
-          Inventory.list_bottles()
-      end
-
-    {:noreply, assign(socket, :bottles, bottles) |> assign(:changeset, changeset)}
+    {:noreply,
+     socket
+     |> assign(:changeset, changeset)
+     |> assign_bottles()}
   end
 
   def handle_event("close_modal", _, socket) do
     {:noreply, push_patch(socket, to: Routes.bottle_index_path(socket, :index))}
   end
 
-  defp list_bottles do
-    Inventory.list_bottles()
+  defp assign_bottles(socket) do
+    changes = socket.assigns.changeset.changes
+
+    assign(socket, :bottles, Inventory.list_bottles(changes))
   end
 end
