@@ -24,6 +24,7 @@ defmodule Topshelf.Cocktails do
     Recipe
     |> preload()
     |> Repo.all()
+    |> Enum.map(&Recipe.put_available/1)
   end
 
   @doc """
@@ -44,6 +45,7 @@ defmodule Topshelf.Cocktails do
     Recipe
     |> preload()
     |> Repo.get!(id)
+    |> Recipe.put_available()
   end
 
   @doc """

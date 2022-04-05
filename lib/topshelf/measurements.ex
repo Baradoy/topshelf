@@ -20,6 +20,8 @@ defmodule Topshelf.Measurements do
   end
 
   def to_measure(volume) when is_binary(volume), do: Float.parse(volume)
+  def to_measure({amount, unit}) when unit in @units, do: {amount, unit}
+  def to_measure(:infintite), do: :infintite
   def to_measure(nil), do: :infintite
 
   def percent_of_measure({amount, unit}, percent), do: {amount * percent, unit}
@@ -46,6 +48,17 @@ defmodule Topshelf.Measurements do
 
   def pour(:infintite, {_pour_amount, _unit}), do: :infintite
 
+  def can_pour?({container_amount, unit}, {pour_amount, unit}),
+    do: container_amount >= pour_amount
+
+  def can_pour?(volume, pour) when volume == :infintite or pour == :infintite, do: true
+
+  def can_pour?({container_amount, unit}, pour),
+    do: can_pour?({container_amount, unit}, convert(pour, unit))
+
+  def can_pour?(volume, pour),
+    do: can_pour?(to_measure(volume), to_measure(pour))
+
   def convert({amount, unit}, destination_unit)
       when unit in @units and destination_unit in @units do
     amount =
@@ -57,4 +70,6 @@ defmodule Topshelf.Measurements do
 
     {Float.round(amount, 3), destination_unit}
   end
+
+  def convert(amount, destination_unit), do: amount |> to_measure() |> convert(destination_unit)
 end

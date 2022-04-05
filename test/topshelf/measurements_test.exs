@@ -22,4 +22,13 @@ defmodule Topshelf.MeasurementsTest do
       assert {0.0, "ml"} = Measurements.pour({20, "ml"}, {1, "oz"})
     end
   end
+
+  describe "can_pour?" do
+    test "can_pour?/2 compares volumes" do
+      assert Measurements.can_pour?({750, "ml"}, {1, "oz"})
+      assert Measurements.can_pour?({750, "ml"}, {29, "ml"})
+      refute Measurements.can_pour?({1, "oz"}, {1.5, "oz"})
+      refute Measurements.can_pour?({1, "oz"}, {50, "ml"})
+    end
+  end
 end

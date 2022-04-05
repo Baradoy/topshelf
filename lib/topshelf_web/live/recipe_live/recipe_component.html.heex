@@ -19,11 +19,12 @@
     </div>
     <div>
       <%= @recipe.directions %>
+      <%= @recipe.available? %>
     </div>
     </.card_content>
     <.card_footer>
         <.button phx-click="pour_cocktail"
-          color="primary"
+          color={if @recipe.available?, do: "primary", else: "danger" }
           label="Pour Cocktail"
           type="button"
           size="xs"

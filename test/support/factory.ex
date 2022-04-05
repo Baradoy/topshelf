@@ -17,6 +17,7 @@ defmodule Topshelf.Factory do
       type: "some type",
       image_url: "https://example.com/image",
       volume: "750ml",
+      remaining_percent: 100,
       shelf: build(:shelf)
     }
   end
