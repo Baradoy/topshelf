@@ -23,6 +23,7 @@ defmodule Topshelf.Cocktails do
   def list_recipes do
     Recipe
     |> preload()
+    |> order_by(desc: :updated_at)
     |> Repo.all()
   end
 
