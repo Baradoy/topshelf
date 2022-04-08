@@ -19,7 +19,9 @@ defmodule Topshelf.Inventory do
 
   """
   def list_shelves do
-    Repo.all(Shelf)
+    Shelf
+    |> order_by(desc: :updated_at)
+    |> Repo.all()
   end
 
   @doc """
@@ -125,6 +127,7 @@ defmodule Topshelf.Inventory do
         query |> where([b], b.remaining_percent <= ^percent)
     end)
     |> preload(:shelf)
+    |> order_by(desc: :updated_at)
     |> Repo.all()
   end
 
