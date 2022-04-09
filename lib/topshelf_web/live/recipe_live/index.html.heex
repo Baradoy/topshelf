@@ -16,7 +16,7 @@
   <.table>
     <.tr>
       <.th>Name</.th>
-      <.th>Image url</.th>
+      <.th>Image</.th>
       <.th>Directions</.th>
 
       <.th></.th>
@@ -25,7 +25,9 @@
     <%= for recipe <- @recipes do %>
       <.tr id={"recipe-#{recipe.id}"}>
         <.td><%= recipe.name %></.td>
-        <.td><%= recipe.image_url %></.td>
+        <.td>
+          <.avatar name={ recipe.name } size="xs" src={ recipe.image_url } random_color />
+        </.td>
         <.td><%= recipe.directions %></.td>
         <.td>
           <span><%= live_redirect "Show", to: Routes.recipe_show_path(@socket, :show, recipe) %></span>
