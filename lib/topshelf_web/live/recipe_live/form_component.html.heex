@@ -5,8 +5,8 @@
     id="recipe-form"
     phx-target={@myself}
     phx-change="validate"
-    phx-submit="save">
-
+    phx-submit="save"
+  >
     <.form_label form={f} field={:name} />
     <.text_input form={f} field={:name} />
     <.form_field_error form={f} field={:name} class="mt-1" />
@@ -25,11 +25,7 @@
         <div class="flex flex-row items-center ml-5">
           <div class="basis-6/12">
             <.form_label form={fi} field={:bottle_id} />
-            <.select
-              options={Enum.map(@bottles, &{&1.name, &1.id})}
-              form={fi}
-              field={:bottle_id}
-            />
+            <.select options={Enum.map(@bottles, &{&1.name, &1.id})} form={fi} field={:bottle_id} />
             <.form_field_error form={fi} field={:bottle_id} class="mt-1" />
           </div>
           <div class="basis-5/12">
@@ -53,7 +49,8 @@
       <% end %>
 
       <div class="px-8 py-2">
-        <.button icon
+        <.button
+          icon
           phx-click="add_ingredient"
           phx-target={@myself}
           color="primary"
@@ -65,7 +62,6 @@
           <Heroicons.Solid.plus class="w-5 h-5" />
           Add Ingredient
         </.button>
-
       </div>
     </div>
 

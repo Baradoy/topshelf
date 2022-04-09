@@ -1,5 +1,5 @@
 <%= if @live_action in [:new, :edit] do %>
-  <.modal  max_width="xl" title={@page_title}>
+  <.modal max_width="xl" title={@page_title}>
     <.live_component
       module={TopshelfWeb.RecipeLive.FormComponent}
       id={@recipe.id || :new}
@@ -26,13 +26,24 @@
       <.tr id={"recipe-#{recipe.id}"}>
         <.td><%= recipe.name %></.td>
         <.td>
-          <.avatar name={ recipe.name } size="xs" src={ recipe.image_url } random_color />
+          <.avatar name={recipe.name} size="xs" src={recipe.image_url} random_color />
         </.td>
         <.td><%= recipe.directions %></.td>
         <.td>
-          <span><%= live_redirect "Show", to: Routes.recipe_show_path(@socket, :show, recipe) %></span>
-          <span><%= live_patch "Edit", to: Routes.recipe_index_path(@socket, :edit, recipe) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: recipe.id, data: [confirm: "Are you sure?"] %></span>
+          <span>
+            <%= live_redirect("Show", to: Routes.recipe_show_path(@socket, :show, recipe)) %>
+          </span>
+          <span>
+            <%= live_patch("Edit", to: Routes.recipe_index_path(@socket, :edit, recipe)) %>
+          </span>
+          <span>
+            <%= link("Delete",
+              to: "#",
+              phx_click: "delete",
+              phx_value_id: recipe.id,
+              data: [confirm: "Are you sure?"]
+            ) %>
+          </span>
           <span>
             <.button
               label="Pour"
@@ -41,7 +52,7 @@
               type="button"
               size="xs"
               variant="outline"
-              value={ recipe.id }
+              value={recipe.id}
             />
           </span>
         </.td>
@@ -49,8 +60,11 @@
     <% end %>
   </.table>
 
-
   <span>
-    <.button link_type="live_patch" to={Routes.recipe_index_path(@socket, :new)} label="New Recipe" />
+    <.button
+      link_type="live_patch"
+      to={Routes.recipe_index_path(@socket, :new)}
+      label="New Recipe"
+    />
   </span>
 </.tabbed_container>

@@ -25,9 +25,20 @@
         <.td><%= shelf.description %></.td>
 
         <.td>
-          <span><%= live_redirect "Show", to: Routes.shelf_show_path(@socket, :show, shelf) %></span>
-          <span><%= live_patch "Edit", to: Routes.shelf_index_path(@socket, :edit, shelf) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: shelf.id, data: [confirm: "Are you sure?"] %></span>
+          <span>
+            <%= live_redirect("Show", to: Routes.shelf_show_path(@socket, :show, shelf)) %>
+          </span>
+          <span>
+            <%= live_patch("Edit", to: Routes.shelf_index_path(@socket, :edit, shelf)) %>
+          </span>
+          <span>
+            <%= link("Delete",
+              to: "#",
+              phx_click: "delete",
+              phx_value_id: shelf.id,
+              data: [confirm: "Are you sure?"]
+            ) %>
+          </span>
         </.td>
       </.tr>
     <% end %>

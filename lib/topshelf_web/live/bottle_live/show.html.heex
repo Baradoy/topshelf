@@ -1,7 +1,7 @@
 <h1>Show Bottle</h1>
 
 <%= if @live_action in [:edit] do %>
-  <.modal max_width="xl" title={@page_title} >
+  <.modal max_width="xl" title={@page_title}>
     <.live_component
       module={TopshelfWeb.BottleLive.FormComponent}
       id={@bottle.id}
@@ -15,8 +15,8 @@
 
 <.tabbed_container bottles>
   <.card class="max-w-sm">
-    <.card_media src={ @bottle.image_url } />
-    <.card_content category={ @bottle.shelf.name } heading={ @bottle.type }>
+    <.card_media src={@bottle.image_url} />
+    <.card_content category={@bottle.shelf.name} heading={@bottle.type}>
       <.dl>
         <.dt>Name</.dt>
         <.dd><%= @bottle.name %></.dd>
@@ -41,11 +41,21 @@
       </.dl>
     </.card_content>
     <.card_footer>
-      <.button link_type="live_patch" to={ Routes.bottle_show_path(@socket, :edit, @bottle) } label="Edit" >
-        <Heroicons.Solid.pencil class="w-4 h-4 mr-2" />Edit
+      <.button
+        link_type="live_patch"
+        to={Routes.bottle_show_path(@socket, :edit, @bottle)}
+        label="Edit"
+      >
+        <Heroicons.Solid.pencil class="w-4 h-4 mr-2" />
+        Edit
       </.button>
-      <.button link_type="live_redirect" to={ Routes.bottle_index_path(@socket, :index) } label="Back" >
-        <Heroicons.Solid.arrow_left class="w-4 h-4 mr-2" />Back
+      <.button
+        link_type="live_redirect"
+        to={Routes.bottle_index_path(@socket, :index)}
+        label="Back"
+      >
+        <Heroicons.Solid.arrow_left class="w-4 h-4 mr-2" />
+        Back
       </.button>
     </.card_footer>
   </.card>

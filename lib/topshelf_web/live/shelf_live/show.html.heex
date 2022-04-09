@@ -15,15 +15,17 @@
   <.dl>
     <.dt>Name:</.dt>
     <.dd><%= @shelf.name %></.dd>
-  
+
     <.dt>Description:</.dt>
     <.dd><%= @shelf.description %></.dd>
   </.dl>
 
-  <.button link_type="live_patch" to={ Routes.shelf_show_path(@socket, :edit, @shelf) } label="Edit" >
-    <Heroicons.Solid.pencil class="w-4 h-4 mr-2" />Edit
+  <.button link_type="live_patch" to={Routes.shelf_show_path(@socket, :edit, @shelf)} label="Edit">
+    <Heroicons.Solid.pencil class="w-4 h-4 mr-2" />
+    Edit
   </.button>
-  <.button link_type="live_redirect" to={ Routes.shelf_index_path(@socket, :index) } label="Back" >
-    <Heroicons.Solid.arrow_left class="w-4 h-4 mr-2" />Back
+  <.button link_type="live_redirect" to={Routes.shelf_index_path(@socket, :index)} label="Back">
+    <Heroicons.Solid.arrow_left class="w-4 h-4 mr-2" />
+    Back
   </.button>
 </.tabbed_container>

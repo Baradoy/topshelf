@@ -5,20 +5,20 @@
     id="bottle-form"
     phx-target={@myself}
     phx-change="validate"
-    phx-submit="save">
-  
+    phx-submit="save"
+  >
     <.form_label form={f} field={:brand} />
     <.text_input form={f} field={:brand} />
     <.form_field_error form={f} field={:brand} class="mt-1" />
-  
+
     <.form_label form={f} field={:name} />
     <.text_input form={f} field={:name} />
     <.form_field_error form={f} field={:name} class="mt-1" />
-  
+
     <.form_label form={f} field={:type} />
     <.text_input form={f} field={:type} />
     <.form_field_error form={f} field={:type} class="mt-1" />
-  
+
     <.form_label form={f} field={:description} />
     <.textarea form={f} field={:description} />
     <.form_field_error form={f} field={:description} class="mt-1" />
@@ -30,23 +30,19 @@
     <.form_label form={f} field={:volume} />
     <.text_input form={f} field={:volume} />
     <.form_field_error form={f} field={:volume} class="mt-1" />
-  
+
     <.form_label form={f} field={:abv} />
-    <.number_input form={f} field={:abv}/>
+    <.number_input form={f} field={:abv} />
     <.form_field_error form={f} field={:abv} class="mt-1" />
-  
+
     <.form_label form={f} field={:shelf_id} />
-    <.select
-      options={Enum.map(@shelves, &{&1.name, &1.id})}
-      form={f}
-      field={:shelf_id}
-    />
+    <.select options={Enum.map(@shelves, &{&1.name, &1.id})} form={f} field={:shelf_id} />
     <.form_field_error form={f} field={:shelf_id} class="mt-1" />
 
     <.form_label form={f} field={:image_url} />
     <.url_input form={f} field={:image_url} />
     <.form_field_error form={f} field={:image_url} class="mt-1" />
-  
+
     <div>
       <.button color="primary" label="Save" type="submit" phx_disable_with="Saving..." />
     </div>

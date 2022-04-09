@@ -1,7 +1,5 @@
-
-
 <%= if @live_action in [:edit] do %>
-  <.modal  max_width="xl" title={@page_title}>
+  <.modal max_width="xl" title={@page_title}>
     <.live_component
       module={TopshelfWeb.RecipeLive.FormComponent}
       id={@recipe.id}
@@ -16,19 +14,29 @@
 
 <.tabbed_container recipes>
   <.card class="max-w-sm">
-     <.card_media src={ @recipe.image_url } />
-    <.card_content heading={ @recipe.name }>
+    <.card_media src={@recipe.image_url} />
+    <.card_content heading={@recipe.name}>
       <.dl>
         <.dt>Directions</.dt>
         <.dd><%= @recipe.directions %></.dd>
       </.dl>
     </.card_content>
     <.card_footer>
-      <.button link_type="live_patch" to={ Routes.recipe_show_path(@socket, :edit, @recipe) } label="Edit" >
-        <Heroicons.Solid.pencil class="w-4 h-4 mr-2" />Edit
+      <.button
+        link_type="live_patch"
+        to={Routes.recipe_show_path(@socket, :edit, @recipe)}
+        label="Edit"
+      >
+        <Heroicons.Solid.pencil class="w-4 h-4 mr-2" />
+        Edit
       </.button>
-      <.button link_type="live_redirect" to={ Routes.recipe_index_path(@socket, :index) } label="Back" >
-        <Heroicons.Solid.arrow_left class="w-4 h-4 mr-2" />Back
+      <.button
+        link_type="live_redirect"
+        to={Routes.recipe_index_path(@socket, :index)}
+        label="Back"
+      >
+        <Heroicons.Solid.arrow_left class="w-4 h-4 mr-2" />
+        Back
       </.button>
     </.card_footer>
   </.card>
